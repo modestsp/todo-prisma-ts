@@ -11,9 +11,33 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
+  id       String    @id @default(uuid())
+  email    String    @unique
   name     String
-  username String @unique
+  username String    @unique
   password String
+  Todo     Todo[]
+  Project  Project[]
+}
+
+model Todo {
+  id          String   @id @default(uuid())
+  description String
+  createdAt   DateTime @default(now())
+  endsAt      DateTime
+  completed   Boolean  @default(false)
+  creator     User     @relation(fields: [creatorId], references: [id])
+  creatorId   String
+  project     Project? @relation(fields: [projectId], references: [id])
+  projectId   String?
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  title     String
+  creator   User     @relation(fields: [creatorId], references: [id])
+  creatorId String
+  createdAt DateTime @default(now())
+  endsAt    DateTime
+  Todo      Todo[]
 }

@@ -16,7 +16,7 @@ export const createUser = async (input: CreateUserInput) => {
         password: passwordHash,
       },
     });
-    return { id: newUser.id, email: newUser.email };
+    return newUser;
   } catch (e: any) {
     throw new Error(e);
   }

@@ -10,10 +10,11 @@ export const createUserHandler = async (
 ) => {
   try {
     const user = await createUser(req.body);
-    return res.send(omit(user, 'password'));
+    const safeUser = omit(user, 'password');
+    return res.send(safeUser);
   } catch (e: any) {
     logger.error(e);
-    // 409 because we assum that some of the inputs are not unique
+    // 409 because we assume that some of the inputs are not unique
     return res.status(409).send(e.message);
   }
 };

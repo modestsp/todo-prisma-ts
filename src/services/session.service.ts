@@ -24,3 +24,20 @@ export const findSessions = ({
     },
   });
 };
+
+export const updateSession = ({
+  sessionId,
+  valid,
+}: {
+  sessionId: string;
+  valid: boolean;
+}) => {
+  return db.session.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      valid,
+    },
+  });
+};

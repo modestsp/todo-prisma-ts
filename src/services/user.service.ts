@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import config from 'config';
 import { CreateUserInput } from '../schema/user.schema';
 import { User } from '@prisma/client';
-import { omit } from 'lodash';
 
 export const createUser = async (input: CreateUserInput): Promise<User> => {
   const { username, email, name, password } = input;

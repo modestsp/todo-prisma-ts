@@ -8,7 +8,6 @@ export const createTodoHandler = async (
   res: Response
 ) => {
   const currentUser = res.locals.user;
-  logger.info('CURRENT USER', currentUser);
   try {
     const todo = await createTodo(req.body, currentUser.id);
     return res.send(todo);

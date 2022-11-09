@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { get } from 'lodash';
+import { get, omit } from 'lodash';
 import { verifyJwt } from '../utils/jwt.utils';
 
 const deserializeUser = (req: Request, res: Response, next: NextFunction) => {
@@ -15,7 +15,7 @@ const deserializeUser = (req: Request, res: Response, next: NextFunction) => {
   const { decoded } = verifyJwt(accessToken);
 
   if (decoded) {
-    res.locals.user = decoded;
+    res.locals.user = omit(decoded, 'password');
     return next();
   }
 

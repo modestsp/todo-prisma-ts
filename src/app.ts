@@ -16,3 +16,5 @@ app.listen(port, async () => {
   logger.info(`App is running at http://localhost:${port}`);
   routes(app);
 });
+
+// Create a get current user route

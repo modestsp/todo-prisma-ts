@@ -48,3 +48,11 @@ export const validatePassword = async ({
 
   return user;
 };
+
+export const findUser = async (id: string) => {
+  return await db.user.findUnique({
+    where: {
+      id,
+    },
+  });
+};

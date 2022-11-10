@@ -30,6 +30,24 @@ export const createUserSessionHandler = async (req: Request, res: Response) => {
   );
   // Return access and refresh tokens
 
+  res.cookie('accessToken', accessToken, {
+    maxAge: 90000, // 15min
+    httpOnly: true,
+    domain: 'localhost',
+    path: '/',
+    sameSite: 'strict',
+    secure: false,
+  });
+
+  res.cookie('refreshToken', refreshToken, {
+    maxAge: 3.154e10, // 1y
+    httpOnly: true,
+    domain: 'localhost',
+    path: '/',
+    sameSite: 'strict',
+    secure: false,
+  });
+
   return res.send({ accessToken, refreshToken });
 };
 
@@ -45,6 +63,7 @@ export const updateSessionHandler = async (req: Request, res: Response) => {
   const sessionId = res.locals.user.session;
 
   await updateSession({ sessionId, valid: false });
+
   return res.send({
     accessToken: null,
     refreshToken: null,

@@ -4,8 +4,14 @@ import {
   updateSessionHandler,
   getUserSessionsHandler,
 } from '../controllers/session.controller';
-import { createTodoHandler } from '../controllers/todo.controller';
-import { createUserHandler } from '../controllers/user.controller';
+import {
+  createTodoHandler,
+  getAllTodosHandler,
+} from '../controllers/todo.controller';
+import {
+  createUserHandler,
+  getCurrentUser,
+} from '../controllers/user.controller';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
 import { createSessionSchema } from '../schema/session.schema';
@@ -17,10 +23,10 @@ function routes(app: Express) {
 
   // Users
   app.post('/api/users', validateResource(createUserSchema), createUserHandler);
-
+  app.get('/api/me', requireUser, getCurrentUser);
   // Todos
   app.post('/api/todos', validateResource(createTodoSchema), createTodoHandler);
-
+  app.get('/api/todos', getAllTodosHandler);
   // Sessions
   app.post(
     '/api/sessions',

@@ -1,7 +1,8 @@
+import { User } from '@prisma/client';
 import { Request, Response, NextFunction } from 'express';
 
 const requireUser = (req: Request, res: Response, next: NextFunction) => {
-  const user = res.locals.user;
+  const user: User = res.locals.user;
   if (!user) {
     return res.sendStatus(403);
   }

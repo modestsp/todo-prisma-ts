@@ -1,6 +1,6 @@
 import { CreateTodoInput } from '../schema/todo.schema';
 import { db } from '../utils/db.server';
-import { User } from '@prisma/client';
+import { Todo, User } from '@prisma/client';
 
 export const createTodo = async (
   input: CreateTodoInput,
@@ -30,7 +30,24 @@ export const getAllTodos = async (userId: User['id']) => {
       },
     });
     return todos;
-  } catch (e) {}
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};
+
+// Delete a todo
+
+export const deleteTodo = async (todoId: Todo['id']) => {
+  try {
+    const deletedTodo = await db.todo.delete({
+      where: {
+        id: todoId,
+      },
+    });
+    if (deletedTodo) return deletedTodo;
+  } catch (e: any) {
+    throw new Error(e);
+  }
 };
 
 // Update to complete

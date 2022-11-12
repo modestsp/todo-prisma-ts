@@ -1,6 +1,6 @@
 import { CreateTodoInput } from '../schema/todo.schema';
 import { db } from '../utils/db.server';
-import { Todo, User } from '@prisma/client';
+import { Project, Todo, User } from '@prisma/client';
 
 export const createTodo = async (
   input: CreateTodoInput,
@@ -51,5 +51,28 @@ export const deleteTodo = async (todoId: Todo['id']) => {
 };
 
 // Update to complete
+
+export const updateTodo = async (
+  todoId: Todo['id'],
+  description?: string,
+  endsAt?: string,
+  completed?: boolean
+) => {
+  try {
+    const completedTodo = await db.todo.update({
+      where: {
+        id: todoId,
+      },
+      data: {
+        completed,
+        description,
+        endsAt,
+      },
+    });
+    if (completedTodo) return completedTodo;
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};
 
 // Update and Asign a todo to a project

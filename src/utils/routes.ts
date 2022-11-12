@@ -1,5 +1,8 @@
 import { Express, Request, Response } from 'express';
-import { createProjectHandler } from '../controllers/project.controller';
+import {
+  createProjectHandler,
+  getAllProjectsHandler,
+} from '../controllers/project.controller';
 import {
   createUserSessionHandler,
   updateSessionHandler,
@@ -39,6 +42,7 @@ function routes(app: Express) {
     validateResource(createProjectSchema),
     createProjectHandler
   );
+  app.get('/api/projects', getAllProjectsHandler);
 
   // Todos
   app.post('/api/todos', validateResource(createTodoSchema), createTodoHandler);

@@ -20,3 +20,16 @@ export const createProject = async (
     throw new Error(e.message);
   }
 };
+
+export const getAllProjects = async (userId: User['id']) => {
+  try {
+    const projects = await db.project.findMany({
+      where: {
+        creatorId: userId,
+      },
+    });
+    return projects;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+};

@@ -1,4 +1,5 @@
 import { Express, Request, Response } from 'express';
+import { createProjectHandler } from '../controllers/project.controller';
 import {
   createUserSessionHandler,
   updateSessionHandler,
@@ -8,6 +9,7 @@ import {
   createTodoHandler,
   deleteTodoHandler,
   getAllTodosHandler,
+  updateTodoHandler,
 } from '../controllers/todo.controller';
 import {
   createUserHandler,
@@ -15,8 +17,13 @@ import {
 } from '../controllers/user.controller';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
+import { createProjectSchema } from '../schema/project.schema';
 import { createSessionSchema } from '../schema/session.schema';
-import { createTodoSchema, deleteTodoSchema } from '../schema/todo.schema';
+import {
+  createTodoSchema,
+  deleteTodoSchema,
+  updateTodoSchema,
+} from '../schema/todo.schema';
 import { createUserSchema } from '../schema/user.schema';
 
 function routes(app: Express) {
@@ -26,6 +33,13 @@ function routes(app: Express) {
   app.post('/api/users', validateResource(createUserSchema), createUserHandler);
   app.get('/api/me', requireUser, getCurrentUser);
 
+  // Projects
+  app.post(
+    '/api/projects',
+    validateResource(createProjectSchema),
+    createProjectHandler
+  );
+
   // Todos
   app.post('/api/todos', validateResource(createTodoSchema), createTodoHandler);
   app.get('/api/todos', getAllTodosHandler);
@@ -34,6 +48,7 @@ function routes(app: Express) {
     validateResource(deleteTodoSchema),
     deleteTodoHandler
   );
+  app.put('/api/todos', validateResource(updateTodoSchema), updateTodoHandler);
 
   // Sessions
   app.post(

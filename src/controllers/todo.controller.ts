@@ -1,6 +1,15 @@
 import { Request, Response } from 'express';
-import { CreateTodoInput, DeleteTodoInput } from '../schema/todo.schema';
-import { createTodo, deleteTodo, getAllTodos } from '../services/todo.service';
+import {
+  CreateTodoInput,
+  DeleteTodoInput,
+  UpdateTodoInput,
+} from '../schema/todo.schema';
+import {
+  createTodo,
+  deleteTodo,
+  getAllTodos,
+  updateTodo,
+} from '../services/todo.service';
 import logger from '../utils/logger';
 import { User } from '@prisma/client';
 
@@ -30,6 +39,24 @@ export const getAllTodosHandler = async (req: Request, res: Response) => {
 };
 
 // Update
+
+export const updateTodoHandler = async (
+  req: Request<{}, {}, UpdateTodoInput>,
+  res: Response
+) => {
+  try {
+    const { todoId, completed, description, endsAt } = req.body;
+    const updatedTodo = await updateTodo(
+      todoId,
+      description,
+      endsAt,
+      completed
+    );
+    return res.status(200).send(updatedTodo);
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+};
 
 // Delete
 

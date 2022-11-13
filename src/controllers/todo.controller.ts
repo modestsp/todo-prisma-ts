@@ -45,13 +45,14 @@ export const updateTodoHandler = async (
   res: Response
 ) => {
   try {
-    const { todoId, completed, description, endsAt } = req.body;
-    const updatedTodo = await updateTodo(
+    const { todoId, completed, description, endsAt, projectId } = req.body;
+    const updatedTodo = await updateTodo({
       todoId,
       description,
       endsAt,
-      completed
-    );
+      completed,
+      projectId,
+    });
     return res.status(200).send(updatedTodo);
   } catch (e: any) {
     throw new Error(e.message);

@@ -1,7 +1,9 @@
 import { Express, Request, Response } from 'express';
 import {
   createProjectHandler,
+  deleteProjectHandler,
   getAllProjectsHandler,
+  updateProjectHandler,
 } from '../controllers/project.controller';
 import {
   createUserSessionHandler,
@@ -20,7 +22,11 @@ import {
 } from '../controllers/user.controller';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
-import { createProjectSchema } from '../schema/project.schema';
+import {
+  createProjectSchema,
+  deleteProjectSchema,
+  updateProjectSchema,
+} from '../schema/project.schema';
 import { createSessionSchema } from '../schema/session.schema';
 import {
   createTodoSchema,
@@ -43,6 +49,16 @@ function routes(app: Express) {
     createProjectHandler
   );
   app.get('/api/projects', getAllProjectsHandler);
+  app.delete(
+    '/api/projects',
+    validateResource(deleteProjectSchema),
+    deleteProjectHandler
+  );
+  app.put(
+    '/api/projects',
+    validateResource(updateProjectSchema),
+    updateProjectHandler
+  );
 
   // Todos
   app.post('/api/todos', validateResource(createTodoSchema), createTodoHandler);

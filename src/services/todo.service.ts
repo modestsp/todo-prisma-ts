@@ -1,4 +1,4 @@
-import { CreateTodoInput } from '../schema/todo.schema';
+import { CreateTodoInput, UpdateTodoInput } from '../schema/todo.schema';
 import { db } from '../utils/db.server';
 import { Project, Todo, User } from '@prisma/client';
 
@@ -52,13 +52,9 @@ export const deleteTodo = async (todoId: Todo['id']) => {
 
 // Update to complete
 
-export const updateTodo = async (
-  todoId: Todo['id'],
-  description?: string,
-  endsAt?: string,
-  completed?: boolean
-) => {
+export const updateTodo = async (input: UpdateTodoInput) => {
   try {
+    const { todoId, projectId, completed, description, endsAt } = input;
     const completedTodo = await db.todo.update({
       where: {
         id: todoId,
@@ -67,6 +63,7 @@ export const updateTodo = async (
         completed,
         description,
         endsAt,
+        projectId,
       },
     });
     if (completedTodo) return completedTodo;

@@ -27,6 +27,7 @@ export const updateTodoSchema = object({
     description: string().optional(),
     endsAt: string().optional(),
     completed: boolean().optional(),
+    projectId: string().optional(),
   }),
 });
 

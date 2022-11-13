@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from 'zod';
+import { object, string, boolean, TypeOf } from 'zod';
 
 export const createProjectSchema = object({
   body: object({
@@ -11,4 +11,24 @@ export const createProjectSchema = object({
   }),
 });
 
-export type CreateProjectSchema = TypeOf<typeof createProjectSchema>['body'];
+export const deleteProjectSchema = object({
+  body: object({
+    projectId: string({
+      required_error: 'projectId is required',
+    }),
+  }),
+});
+
+export const updateProjectSchema = object({
+  body: object({
+    projectId: string({
+      required_error: 'todoId is required',
+    }),
+    title: string().optional(),
+    endsAt: string().optional(),
+  }),
+});
+
+export type CreateProjectInput = TypeOf<typeof createProjectSchema>['body'];
+export type DeleteProjectInput = TypeOf<typeof deleteProjectSchema>['body'];
+export type UpdateProjectInput = TypeOf<typeof updateProjectSchema>['body'];

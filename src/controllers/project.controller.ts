@@ -1,10 +1,19 @@
 import { User } from '@prisma/client';
 import { Request, Response } from 'express';
-import { CreateProjectSchema } from '../schema/project.schema';
-import { createProject, getAllProjects } from '../services/project.service';
+import {
+  CreateProjectInput,
+  DeleteProjectInput,
+  UpdateProjectInput,
+} from '../schema/project.schema';
+import {
+  createProject,
+  deleteProject,
+  getAllProjects,
+  updateProject,
+} from '../services/project.service';
 
 export const createProjectHandler = async (
-  req: Request<{}, {}, CreateProjectSchema>,
+  req: Request<{}, {}, CreateProjectInput>,
   res: Response
 ) => {
   try {
@@ -21,6 +30,34 @@ export const getAllProjectsHandler = async (req: Request, res: Response) => {
     const currentUser: User = res.locals.user;
     const projects = await getAllProjects(currentUser.id);
     return res.status(200).send(projects);
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+};
+
+export const deleteProjectHandler = async (
+  req: Request<{}, {}, DeleteProjectInput>,
+  res: Response
+) => {
+  try {
+    const { projectId } = req.body;
+    const projectDeleted = await deleteProject({ projectId });
+    return res.status(200).send(projectDeleted);
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+};
+
+export const updateProjectHandler = async (
+  req: Request<{}, {}, UpdateProjectInput>,
+  res: Response
+) => {
+  try {
+    const { projectId, title, endsAt } = req.body;
+    console.log('aca el req body', req.body);
+    const updatedProject = await updateProject({ projectId, title, endsAt });
+    console.log('ACA EL UPDATED PROJECT', updatedProject);
+    return res.status(200).send(updatedProject);
   } catch (e: any) {
     throw new Error(e.message);
   }

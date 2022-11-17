@@ -78,7 +78,7 @@ function routes(app: Express) {
     createUserSessionHandler
   );
   app.get('/api/sessions', requireUser, getUserSessionsHandler);
-  app.put('/api/sessions', requireUser, updateSessionHandler);
+  app.delete('/api/sessions', requireUser, updateSessionHandler);
 }
 
 export default routes;

@@ -3,62 +3,53 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { LogIn } from './components/LogIn/LogIn';
 import { User } from './types';
+import { SignUp } from './components/SignUp/SignUp';
 import './App.css';
 import userService from './services/user.service';
+import axios from 'axios';
 
 interface UserContextType {
-  currentUser: User;
-  setCurrentUser: (newSession: User) => void;
-  accessToken: string;
-  setAccessToken: (newToken: string) => void;
+  currentUser?: User;
+  setCurrentUser: (newUser: User) => void;
 }
 
-const initialState = {
-  currentUser: {
-    id: '',
-    username: '',
-    email: '',
-    iat: 0,
-    exp: 0,
-    name: '',
-    session: '',
-  },
-  accessToken: '',
-  setCurrentUser: () => {},
-  setAccessToken: () => '',
+const initialUser = {
+  id: '',
+  username: '',
+  email: '',
+  iat: 0,
+  exp: 0,
+  name: '',
+  session: '',
 };
-export const UserContext = createContext<UserContextType>(initialState);
+export const UserContext = createContext<UserContextType | undefined>(
+  undefined
+);
 function App() {
-  const [accessToken, setAccessToken] = useState('');
-  let todos: never[] = [];
-  const [currentUser, setCurrentUser] = useState<User>({
-    id: '',
-    username: '',
-    email: '',
-    iat: 0,
-    exp: 0,
-    name: '',
-    session: '',
-  });
+  const [currentUser, setCurrentUser] = useState<User>(initialUser);
 
   useEffect(() => {
-    const getTodos = async () => {
-      todos = await userService.getAllTodos();
-      return todos;
+    const getCurrentUser = async () => {
+      const user: User = await userService.getCurrentUser();
+      const logged = await axios.get('http://localhost:4000/api/me', {
+        withCredentials: true,
+      });
+      console.log('Logged', logged);
+      console.log('User', user);
+      setCurrentUser(user);
+      console.log(currentUser);
     };
-    getTodos();
-    console.log(todos);
-  }, [accessToken]);
+    getCurrentUser();
+    console.log('current User in App', currentUser);
+  }, []);
 
   return (
     <div className="App">
-      <UserContext.Provider
-        value={{ currentUser, setCurrentUser, accessToken, setAccessToken }}
-      >
+      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<LogIn />} />
-          {/* <Route path='/auth/sign' element={<LogIn/>}/> */}
+          <Route path="/auth/sign-up" element={<SignUp />} />
         </Routes>
       </UserContext.Provider>
     </div>

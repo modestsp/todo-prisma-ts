@@ -31,7 +31,7 @@ export const createUserSchema = object({
 });
 
 export const SignUp = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const { accessToken, setAccessToken } = useContext(UserContext);
   const {
     register,
@@ -41,25 +41,15 @@ export const SignUp = () => {
   } = useForm<CreateUserInput>({
     resolver: zodResolver(createUserSchema),
   });
-  const onSubmit: SubmitHandler<CreateUserInput> = async (data) => {
-    console.log('ACA LA DATA', data);
-    // try {
-    //   const { username, password } = data;
-    //   const tokens = await userService.login({ username, password });
-    //   setAccessToken(tokens.accessToken);
-    //   userService.setAccessToken(tokens.accessToken);
-    //   console.log('ACA EL TOKEN **********', accessToken);
-    //   const loggedUser = await userService.getCurrentUser();
-    //   console.log('LoggedUser', loggedUser);
-    //   return navigate('/');
-    //   // console.log('Aca la data', data);
-    //   // const logged = await axios.get('http://localhost:4000/api/me', {
-    //   //   headers: { Authorization: `Bearer ${accessToken}` },
-    //   // });
-    //   // console.log('ACA EL LOGED', logged);
-    // } catch (e: any) {
-    //   console.error(e.message);
-    // }
+  const onSubmit: SubmitHandler<CreateUserInput> = async (input) => {
+    try {
+      const { username, password } = input;
+      await userService.createUser(input);
+      await userService.login({ username, password });
+      return navigate('/');
+    } catch (e: any) {
+      console.error(e.message);
+    }
   };
 
   console.log(watch('username')); // watch input value by passing the name of it

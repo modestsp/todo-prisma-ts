@@ -1,18 +1,42 @@
+import axios from 'axios';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../../App';
+import { useNavigate } from 'react-router-dom';
+import userService from '../../../services/user.service';
 import styles from './header.module.css';
 
 export const Header = () => {
+  const navigate = useNavigate();
+  const context = useContext(UserContext);
+  console.log('CONTEXT EN HEDAR', context);
+  const logOutHandler = async () => {
+    await axios.delete('http://localhost:4000/api/sessions', {
+      withCredentials: true,
+    });
+    // await userService.logout();
+    // console.log('Logging out');
+    navigate('/auth/login');
+  };
   return (
+    // ACTUALIZAR CONTEXT DE USER
     <header className={styles.header}>
       <p>LOGO!</p>
-      <ul>
-        <li>
-          <Link to="/auth/signup">Sign Up</Link>
-        </li>
-        <li>
-          <Link to="/auth/LogIn">Log In</Link>
-        </li>
-      </ul>
+      {context?.currentUser?.id ? (
+        <div>
+          <p>Welcome {context.currentUser.name}</p>
+          <button onClick={logOutHandler}>Log Out</button>
+        </div>
+      ) : (
+        <ul>
+          <li>
+            <Link to="/auth/sign-up">Sign Up</Link>
+          </li>
+          <li>
+            <Link to="/auth/LogIn">Log In</Link>
+          </li>
+        </ul>
+      )}
     </header>
   );
 };

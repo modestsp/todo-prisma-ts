@@ -5,13 +5,13 @@ import { useContext, useEffect } from 'react';
 import { UserContext } from '../../App';
 
 export const Home = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  console.log(useContext(UserContext));
 
-  useEffect(() => {
-    console.log(currentUser);
+  // useEffect(() => {
+  //   console.log(currentUser);
 
-    console.log('Nuevo estate', currentUser);
-  }, []);
+  //   console.log('Nuevo estate', currentUser);
+  // }, []);
   return (
     <div>
       <Header />

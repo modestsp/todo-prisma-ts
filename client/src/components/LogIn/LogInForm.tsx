@@ -1,12 +1,12 @@
-import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { object, string } from 'zod';
 import userService from '../../services/user.service';
-import { UserContext } from '../../App';
 import { CreateSessionInput } from '../../types';
 import styles from './login.module.css';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext } from 'react';
+import { UserContext } from '../../App';
 
 export const createSessionSchema = object({
   username: string({
@@ -19,28 +19,25 @@ export const createSessionSchema = object({
 
 export default function LogInForm() {
   const navigate = useNavigate();
-  const { accessToken, setAccessToken } = useContext(UserContext);
+  const context = useContext(UserContext);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<CreateSessionInput>();
+  } = useForm<CreateSessionInput>({
+    resolver: zodResolver(createSessionSchema),
+  });
   const onSubmit: SubmitHandler<CreateSessionInput> = async (data) => {
     try {
       const { username, password } = data;
-      const tokens = await userService.login({ username, password });
-      setAccessToken(tokens.accessToken);
-      userService.setAccessToken(tokens.accessToken);
-      console.log('ACA EL TOKEN **********', accessToken);
+      await userService.login({ username, password });
       const loggedUser = await userService.getCurrentUser();
-      console.log('LoggedUser', loggedUser);
+      context?.setCurrentUser(loggedUser);
       return navigate('/');
-      // console.log('Aca la data', data);
       // const logged = await axios.get('http://localhost:4000/api/me', {
-      //   headers: { Authorization: `Bearer ${accessToken}` },
+      //   withCredentials: true,
       // });
-      // console.log('ACA EL LOGED', logged);
     } catch (e: any) {
       console.error(e.message);
     }

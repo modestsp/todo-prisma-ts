@@ -9,11 +9,9 @@ import styles from './header.module.css';
 export const Header = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  console.log('CONTEXT EN HEDAR', context);
+
   const logOutHandler = async () => {
-    await axios.delete('http://localhost:4000/api/sessions', {
-      withCredentials: true,
-    });
+    await userService.logout();
     // await userService.logout();
     // console.log('Logging out');
     navigate('/auth/login');

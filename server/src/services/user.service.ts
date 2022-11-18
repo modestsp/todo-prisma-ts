@@ -3,24 +3,27 @@ import bcrypt from 'bcrypt';
 import config from 'config';
 import { CreateUserInput } from '../schema/user.schema';
 import { User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 export const createUser = async (input: CreateUserInput): Promise<User> => {
   const { username, email, name, password } = input;
   const salt = await config.get<number>('saltRounds');
   const passwordHash = await bcrypt.hash(password, salt);
-  try {
-    const newUser = await db.user.create({
-      data: {
-        username,
-        name,
-        email,
-        password: passwordHash,
-      },
-    });
-    return newUser;
-  } catch (e: any) {
-    throw new Error(e);
-  }
+  const newUser = await db.user.create({
+    data: {
+      username,
+      name,
+      email,
+      password: passwordHash,
+    },
+  });
+  return newUser;
+  // } catch (e: any) {
+
+  //   throw e;
+  //   // console.log(e.message)
+  //   // throw new Error(e.message);
+  // }
 };
 
 export const validatePassword = async ({

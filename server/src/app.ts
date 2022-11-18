@@ -5,6 +5,7 @@ import routes from './utils/routes';
 import deserializeUser from './middleware/deserializeUser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { errorHandler } from './utils/errorHandler';
 
 const port = config.get<number>('port');
 
@@ -25,6 +26,7 @@ app.use(deserializeUser);
 app.listen(port, async () => {
   logger.info(`App is running at http://localhost:${port}`);
   routes(app);
+  app.use(errorHandler);
 });
 
 // Create a get current user route

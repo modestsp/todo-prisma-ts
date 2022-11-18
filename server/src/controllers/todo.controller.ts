@@ -34,7 +34,7 @@ export const getAllTodosHandler = async (req: Request, res: Response) => {
     return res.send(todos);
   } catch (e: any) {
     logger.error(e);
-    return res.status(400).send(e.message);
+    return res.status(400).send([]);
   }
 };
 

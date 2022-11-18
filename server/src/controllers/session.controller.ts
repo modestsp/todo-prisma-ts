@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import config from 'config';
 import {
   createSession,
@@ -13,7 +13,7 @@ export const createUserSessionHandler = async (req: Request, res: Response) => {
   const user = await validatePassword(req.body);
 
   if (!user) {
-    return res.status(401).send('Invalid username or password');
+    return res.status(401).send({ error: 'Invalid username or password' });
   }
   // Create a session
   const session = await createSession(user.id);

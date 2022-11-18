@@ -1,9 +1,11 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { object, string } from 'zod';
 import { useNavigate } from 'react-router-dom';
-import { CreateUserInput } from '../../types';
+import { CreateUserInput, User } from '../../types';
 import userService from '../../services/user.service';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext, useState } from 'react';
+import { UserContext } from '../../App';
 import styles from './signup.module.css';
 // Check for available username
 // If user created redirect
@@ -32,6 +34,8 @@ export const createUserSchema = object({
 
 export const SignUp = () => {
   const navigate = useNavigate();
+  const [errorMesage, setErrorMessage] = useState<string | null>(null);
+  const context = useContext(UserContext);
   // const { accessToken, setAccessToken } = useContext(UserContext);
   const {
     register,
@@ -44,11 +48,16 @@ export const SignUp = () => {
   const onSubmit: SubmitHandler<CreateUserInput> = async (input) => {
     try {
       const { username, password } = input;
-      await userService.createUser(input);
-      await userService.login({ username, password });
-      return navigate('/');
+      const createdUser = await userService.createUser(input);
+      context?.setCurrentUser(createdUser);
+      const tokens = await userService.login({ username, password });
+      if (tokens) return navigate('/');
     } catch (e: any) {
-      console.error(e.message);
+      setErrorMessage(e.response?.data?.error);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+      console.log(errorMesage);
     }
   };
 
@@ -95,6 +104,7 @@ export const SignUp = () => {
         {...register('email', { required: true })}
       />
       <p>{errors.email?.message}</p>
+      {errorMesage ? <p>{errorMesage}</p> : null}
       <input type="submit" />
     </form>
   );

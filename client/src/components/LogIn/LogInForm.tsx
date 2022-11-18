@@ -5,8 +5,10 @@ import { CreateSessionInput } from '../../types';
 import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../../App';
+import { AxiosError } from 'axios';
+import { axiosErrorHandler } from '../../utils/axiosErrorHandler';
 
 export const createSessionSchema = object({
   username: string({
@@ -19,6 +21,7 @@ export const createSessionSchema = object({
 
 export default function LogInForm() {
   const navigate = useNavigate();
+  const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const context = useContext(UserContext);
   const {
     register,
@@ -39,7 +42,11 @@ export default function LogInForm() {
       //   withCredentials: true,
       // });
     } catch (e: any) {
-      console.error(e.message);
+      setErrorMessage(e.response?.data?.error);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 3000);
+      console.log(errorMesage);
     }
   };
 
@@ -66,8 +73,8 @@ export default function LogInForm() {
       {errors.password && (
         <span className={styles.errorMessage}>This field is required</span>
       )}
-
-      <input type="submit" />
+      {errorMesage ? <p>{errorMesage}</p> : null}
+      <button type="submit">Send</button>
     </form>
   );
 }

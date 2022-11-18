@@ -16,9 +16,9 @@ model User {
   name     String
   username String    @unique
   password String
-  Todo     Todo[]
-  Project  Project[]
-  Session  Session[]
+  todos    Todo[]
+  projects Project[]
+  session  Session[]
 }
 
 model Session {
@@ -48,5 +48,5 @@ model Project {
   creatorId String
   createdAt DateTime @default(now())
   endsAt    DateTime
-  Todo      Todo[]
+  todos     Todo[]
 }

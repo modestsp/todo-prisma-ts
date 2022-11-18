@@ -14,3 +14,13 @@ export interface User {
   name: string;
   session: string;
 }
+
+export interface Todo {
+  id: string;
+  description: string;
+  createdAt: string;
+  endsAt: string;
+  completed: boolean;
+  creatorId: string;
+  projectId?: string;
+}

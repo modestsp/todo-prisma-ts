@@ -1,12 +1,12 @@
 import { Home } from './components/Home/Home';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { LogIn } from './components/LogIn/LogIn';
 import { User } from './types';
 import { SignUp } from './components/SignUp/SignUp';
-import './App.css';
 import userService from './services/user.service';
 import axios from 'axios';
+import './App.css';
 
 interface UserContextType {
   currentUser?: User;
@@ -27,17 +27,18 @@ export const UserContext = createContext<UserContextType | undefined>(
 );
 function App() {
   const [currentUser, setCurrentUser] = useState<User>(initialUser);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const user: User = await userService.getCurrentUser();
-      const logged = await axios.get('http://localhost:4000/api/me', {
-        withCredentials: true,
-      });
-      console.log('Logged', logged);
-      console.log('User', user);
-      setCurrentUser(user);
-      console.log(currentUser);
+      try {
+        const loggedUser: User = await userService.getCurrentUser();
+        setCurrentUser(loggedUser);
+        console.log(currentUser);
+      } catch (e) {
+        console.log('No user');
+        navigate('/auth/login');
+      }
     };
     getCurrentUser();
     console.log('current User in App', currentUser);

@@ -1,4 +1,4 @@
-import { CreateSessionInput, CreateUserInput } from '../types';
+import { CreateSessionInput, CreateUserInput, User } from '../types';
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -17,14 +17,14 @@ const login = async (input: CreateSessionInput) => {
 };
 
 const logout = async () => {
-  const response = await axios.put(`${BASE_URL}/sessions`, config);
+  const response = await axios.delete(`${BASE_URL}/sessions`, config);
   return response.data;
 };
-const createUser = async (input: CreateUserInput) => {
+const createUser = async (input: CreateUserInput): Promise<User> => {
   const response = await axios.post(`${BASE_URL}/users`, input, config);
   return response.data;
 };
-const getCurrentUser = async () => {
+const getCurrentUser = async (): Promise<User> => {
   const response = await axios.get(`${BASE_URL}/me`, config);
   return response.data;
 };

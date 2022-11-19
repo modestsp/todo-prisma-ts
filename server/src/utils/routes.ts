@@ -35,6 +35,7 @@ import {
   updateTodoSchema,
 } from '../schema/todo.schema';
 import { createUserSchema } from '../schema/user.schema';
+import { errorHandler } from './errorHandler';
 
 function routes(app: Express) {
   app.get('/ok', (req: Request, res: Response) => res.sendStatus(200));

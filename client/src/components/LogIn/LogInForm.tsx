@@ -75,6 +75,7 @@ export default function LogInForm() {
       )}
       {errorMesage ? <p>{errorMesage}</p> : null}
       <button type="submit">Send</button>
+      <p>Dont have an account?</p>
     </form>
   );
 }

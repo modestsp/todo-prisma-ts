@@ -32,7 +32,7 @@ export const getAllProjects = async (userId: User['id']) => {
         creatorId: userId,
       },
       include: {
-        Todo: {
+        todos: {
           select: {
             description: true,
           },

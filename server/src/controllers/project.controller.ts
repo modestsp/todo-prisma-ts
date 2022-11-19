@@ -11,6 +11,7 @@ import {
   getAllProjects,
   updateProject,
 } from '../services/project.service';
+import logger from '../utils/logger';
 
 export const createProjectHandler = async (
   req: Request<{}, {}, CreateProjectInput>,
@@ -28,10 +29,13 @@ export const createProjectHandler = async (
 export const getAllProjectsHandler = async (req: Request, res: Response) => {
   try {
     const currentUser: User = res.locals.user;
-    const projects = await getAllProjects(currentUser.id);
-    return res.status(200).send(projects);
+    if (currentUser) {
+      const projects = await getAllProjects(currentUser.id);
+      return res.status(200).send(projects);
+    }
   } catch (e: any) {
-    throw new Error(e.message);
+    logger.error(e);
+    return res.status(400).send([]);
   }
 };
 

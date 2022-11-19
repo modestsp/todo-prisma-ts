@@ -2,13 +2,8 @@ import { CreateSessionInput, CreateUserInput, User } from '../types';
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-let token: string = '';
-
 const config = {
   withCredentials: true,
-};
-const setAccessToken = (newAccessToken: string) => {
-  token = `Bearer ${newAccessToken}`;
 };
 
 const login = async (input: CreateSessionInput) => {
@@ -29,16 +24,9 @@ const getCurrentUser = async (): Promise<User> => {
   return response.data;
 };
 
-const getAllTodos = async () => {
-  const response = await axios.get(`${BASE_URL}/todos`, config);
-  return response.data;
-};
-
 export default {
-  setAccessToken,
   login,
   logout,
   getCurrentUser,
-  getAllTodos,
   createUser,
 };

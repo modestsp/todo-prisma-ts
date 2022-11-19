@@ -5,8 +5,9 @@ import { LogIn } from './components/LogIn/LogIn';
 import { User } from './types';
 import { SignUp } from './components/SignUp/SignUp';
 import userService from './services/user.service';
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 import './App.css';
+import { NotFound } from './NotFound';
 
 interface UserContextType {
   currentUser?: User;
@@ -28,6 +29,18 @@ export const UserContext = createContext<UserContextType | undefined>(
 function App() {
   const [currentUser, setCurrentUser] = useState<User>(initialUser);
   const navigate = useNavigate();
+
+  const { isLoading, data, isError, error } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: userService.getCurrentUser,
+    onSuccess: (context) => {
+      console.log('ACA EL CONTEXT', context);
+    },
+  });
+
+  console.log('ACA LA DATA', data);
+  console.log('ACA EL ERROR BOOLEAN', isError);
+  console.log('ACA EL ERROR', error);
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -51,6 +64,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth/login" element={<LogIn />} />
           <Route path="/auth/sign-up" element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </UserContext.Provider>
     </div>

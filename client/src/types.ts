@@ -1,9 +1,11 @@
 import { TypeOf } from 'zod';
 import { createSessionSchema } from './components/LogIn/LogInForm';
 import { createUserSchema } from './components/SignUp/SignUp';
+import { createTodoSchema } from './components/Home/Main/Todos/CreateTodoForm';
 
 export type CreateSessionInput = TypeOf<typeof createSessionSchema>;
 export type CreateUserInput = TypeOf<typeof createUserSchema>;
+export type CreateTodoInput = TypeOf<typeof createTodoSchema>;
 
 export interface User {
   id: string;
@@ -13,6 +15,7 @@ export interface User {
   exp: number;
   name: string;
   session: string;
+  todos?: Todo[];
 }
 
 export interface Todo {
@@ -23,4 +26,13 @@ export interface Todo {
   completed: boolean;
   creatorId: string;
   projectId?: string;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  creatorId: string;
+  createdAt: string;
+  endsAt: string;
+  todos?: Todo[];
 }

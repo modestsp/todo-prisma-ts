@@ -1,39 +1,56 @@
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../../../App';
-import { Link } from 'react-router-dom';
 import { Todo } from '../../../../types';
+import todoService from '../../../../services/todo.service';
 import { DisplayTodo } from './DisplayTodo';
-import userService from '../../../../services/user.service';
+import projectService from '../../../../services/project.service';
+import { useNavigate } from 'react-router-dom';
+import { CreateTodoForm } from './CreateTodoForm';
+import { useQuery } from '@tanstack/react-query';
 
 export const Todos = () => {
-  const [todos, setTodos] = useState<Todo[] | null>(null);
+  // const [todos, setTodos] = useState<Todo[] | []>([]);
+  const navigate = useNavigate();
   const context = useContext(UserContext);
   let userId = context?.currentUser?.id;
-  useEffect(() => {
-    const getTodos = async () => {
-      let userId = context?.currentUser?.id;
-      if (userId) {
-        const allTodos = await userService.getAllTodos();
-        setTodos(allTodos);
-        console.log('TODOS', todos);
-        console.log(userId);
-      } else {
-        console.log('No toods');
-      }
-    };
-    getTodos();
-  }, [userId]);
-  console.log(todos);
+
+  const { isLoading, data: todos } = useQuery({
+    queryKey: ['todos'],
+    queryFn: todoService.getAllTodos,
+  });
+  // Tal vez guardar los todos en context
+  // useEffect(() => {
+  //   const getTodos = async () => {
+  //     try {
+  //       let userId = context?.currentUser?.id;
+  //       if (userId && todos.length === 0) {
+  //         console.log('TODOS ANTES DEL FETCHING', todos);
+  //         const allTodos = await todoService.getAllTodos();
+  //         const projects = await projectService.getProjects();
+  //         console.log(projects);
+  //         setTodos(allTodos);
+  //         console.log(userId);
+  //       }
+  //     } catch (e: any) {
+  //       console.log('ERROR', e);
+  //       navigate('/auth/login');
+  //     }
+  //   };
+  //   getTodos();
+  // }, [userId]);
+  // console.log(todos);
   return (
     <ul>
-      {todos ? (
-        todos.map((todo: Todo) => {
+      <button>Create a todo</button>
+
+      {!isLoading ? (
+        todos!.map((todo: Todo) => {
           return <DisplayTodo key={todo.id} todo={todo} />;
         })
       ) : (
         <p>Loading</p>
       )}
-      ;
+      <CreateTodoForm />
     </ul>
   );
 };

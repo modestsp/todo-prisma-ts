@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container aside {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.title {
+  color: beige;
+}
+
+.mainContent {
+  display: flex;
+  align-items: center;
+}

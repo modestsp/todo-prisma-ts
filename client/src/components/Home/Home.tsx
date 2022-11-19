@@ -3,7 +3,7 @@ import { Main } from './Main/Main';
 import { Footer } from './Footer/Footer';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../../App';
-
+import styles from './home.module.css';
 export const Home = () => {
   console.log(useContext(UserContext));
 
@@ -13,7 +13,7 @@ export const Home = () => {
   //   console.log('Nuevo estate', currentUser);
   // }, []);
   return (
-    <div>
+    <div className={styles.container}>
       <Header />
       <Main />
       <Footer />

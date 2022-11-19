@@ -19,6 +19,7 @@ export const createTodoHandler = async (
 ) => {
   const currentUser: Omit<User, 'password'> = res.locals.user;
   try {
+    console.log('ACA LA REQUEST', req.body);
     const todo = await createTodo(req.body, currentUser.id);
     return res.send(todo);
   } catch (e: any) {
@@ -30,8 +31,10 @@ export const createTodoHandler = async (
 export const getAllTodosHandler = async (req: Request, res: Response) => {
   try {
     const currentUser: Omit<User, 'password'> = res.locals.user;
-    const todos = await getAllTodos(currentUser.id);
-    return res.send(todos);
+    if (currentUser) {
+      const todos = await getAllTodos(currentUser.id);
+      return res.send(todos);
+    }
   } catch (e: any) {
     logger.error(e);
     return res.status(400).send([]);

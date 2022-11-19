@@ -23,7 +23,19 @@ const createTodo = async (
   );
   return response.data;
 };
+
+const deleteTodo = async (todoId: string) => {
+  const response = await axios.delete(`${BASE_URL}/todos`, {
+    data: {
+      todoId,
+    },
+    withCredentials: true,
+  });
+  return response.data;
+};
+
 export default {
   getAllTodos,
   createTodo,
+  deleteTodo,
 };

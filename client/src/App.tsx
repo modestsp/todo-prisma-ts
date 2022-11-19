@@ -6,6 +6,7 @@ import { User } from './types';
 import { SignUp } from './components/SignUp/SignUp';
 import userService from './services/user.service';
 import { useQuery } from '@tanstack/react-query';
+import { useGetCurrentUser } from './components/hooks/useGetCurrentUser';
 import './App.css';
 import { NotFound } from './NotFound';
 
@@ -29,14 +30,7 @@ export const UserContext = createContext<UserContextType | undefined>(
 function App() {
   const [currentUser, setCurrentUser] = useState<User>(initialUser);
   const navigate = useNavigate();
-
-  const { isLoading, data, isError, error } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: userService.getCurrentUser,
-    onSuccess: (context) => {
-      console.log('ACA EL CONTEXT', context);
-    },
-  });
+  const { isLoading, data, isError, error } = useGetCurrentUser();
 
   console.log('ACA LA DATA', data);
   console.log('ACA EL ERROR BOOLEAN', isError);

@@ -1,4 +1,4 @@
-import { CreateTodoInput } from '../types';
+import { CreateTodoInput, UpdateTodoInput } from '../types';
 import { Todo } from '../types';
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -34,8 +34,13 @@ const deleteTodo = async (todoId: string) => {
   return response.data;
 };
 
+export const updateTodo = async ({ input }: { input: UpdateTodoInput }) => {
+  const response = await axios.put(`${BASE_URL}/todos`, input);
+  return response.data;
+};
 export default {
   getAllTodos,
   createTodo,
   deleteTodo,
+  updateTodo,
 };

@@ -1,4 +1,9 @@
-import { CreateSessionInput, CreateUserInput, User } from '../types';
+import {
+  CreateProjectInput,
+  CreateSessionInput,
+  CreateUserInput,
+  User,
+} from '../types';
 import { Todo, Project } from '../types';
 import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -12,6 +17,29 @@ const getProjects = async () => {
   return response.data;
 };
 
+const createProject = async (
+  input: CreateProjectInput,
+  userId: string
+): Promise<Project> => {
+  const response = await axios.post(
+    `${BASE_URL}/projects`,
+    { ...input, userId },
+    config
+  );
+  return response.data;
+};
+
+const deleteProject = async (projectId: string): Promise<Project | null> => {
+  const response = await axios.delete(`${BASE_URL}/projects`, {
+    data: {
+      projectId,
+    },
+    withCredentials: true,
+  });
+  return response.data;
+};
 export default {
   getProjects,
+  createProject,
+  deleteProject,
 };

@@ -62,7 +62,7 @@ export const updateTodo = async (input: UpdateTodoInput) => {
       data: {
         completed,
         description,
-        endsAt,
+        endsAt: endsAt ? new Date(endsAt) : undefined,
         projectId,
       },
     });

@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../../App';
 import { useNavigate } from 'react-router-dom';
 import userService from '../../../services/user.service';
+import { useGetCurrentUser } from '../../hooks/useGetCurrentUser';
 import styles from './header.module.css';
 
 export const Header = () => {
   const navigate = useNavigate();
-  const context = useContext(UserContext);
-
+  const { data: currentUser } = useGetCurrentUser();
   const logOutHandler = async () => {
     await userService.logout();
     // await userService.logout();
@@ -20,9 +19,9 @@ export const Header = () => {
     // ACTUALIZAR CONTEXT DE USER
     <header className={styles.header}>
       <p>LOGO!</p>
-      {context?.currentUser?.id ? (
+      {currentUser ? (
         <div>
-          <p>Welcome {context.currentUser.name}</p>
+          <p>Welcome {currentUser.name}</p>
           <button onClick={logOutHandler}>Log Out</button>
         </div>
       ) : (

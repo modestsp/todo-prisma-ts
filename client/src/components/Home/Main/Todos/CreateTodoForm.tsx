@@ -6,6 +6,7 @@ import styles from './todos.module.css';
 import { useGetCurrentUser } from '../../../hooks/useGetCurrentUser';
 import { useCreateTodo } from '../../../hooks/useCreateTodo';
 import { useState } from 'react';
+
 export const createTodoSchema = object({
   description: string({
     required_error: 'Description is required',
@@ -30,6 +31,7 @@ export const CreateTodoForm = () => {
   });
   const onSubmit: SubmitHandler<CreateTodoInput> = async (input) => {
     try {
+      console.log('Input', input);
       if (currentUser) {
         mutate({ input, userId: currentUser.id });
       }
@@ -43,7 +45,7 @@ export const CreateTodoForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.createTodoForm}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.todoForm}>
       <label htmlFor="name">Description</label>
       <input
         id="name"

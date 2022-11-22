@@ -1,10 +1,58 @@
-.todoCard {
-  background-color: azure;
-  color: black;
-  border: 1px solid black;
+p {
+  margin: 0;
+  padding: 0;
 }
 
-.createTodoForm {
+.todoCard {
+  height: 80px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: azure;
+  color: black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  margin-bottom: 0.2rem;
+  margin-top: 0.2rem;
+}
+
+.todoInfoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.todoCard div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todoForm {
   display: flex;
   flex-direction: column;
 }
+
+.todoInfoTitle {
+  margin: 0;
+  padding: 0;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.removeButton {
+  border-radius: 0.2rem;
+  color: rgb(24, 23, 23);
+  border: none;
+  background-color: rgba(255, 0, 0, 0.527);
+  margin-top: 0.5rem;
+
+  /* position: absolute;
+  top: 5%;
+  left: 92%; */
+}
+/* .removeButton:hover {
+  scale: 1.1;
+  box-shadow: 1px 1px 1px solid black;
+} */

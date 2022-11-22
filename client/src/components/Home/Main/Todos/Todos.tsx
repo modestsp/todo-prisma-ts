@@ -3,25 +3,52 @@ import todoService from '../../../../services/todo.service';
 import { DisplayTodo } from './DisplayTodo';
 import { CreateTodoForm } from './CreateTodoForm';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Modal } from '../../Modal';
+import { UpdateTodoForm } from './UpdateTodo';
 
 export const Todos = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const { isLoading, data: todos } = useQuery({
     queryKey: ['todos'],
     queryFn: todoService.getAllTodos,
   });
 
+  const close = () => setModalOpen(false);
+  const open = () => setModalOpen(true);
+
   return (
     <ul>
-      <button>Create a todo</button>
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => (modalOpen ? close() : open())}
+      >
+        Create todo
+      </motion.button>
+
+      <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
+        {modalOpen && (
+          <Modal handleClose={close}>
+            <CreateTodoForm />
+          </Modal>
+        )}
+      </AnimatePresence>
 
       {!isLoading ? (
         todos!.map((todo: Todo) => {
-          return <DisplayTodo key={todo.id} todo={todo} />;
+          return (
+            <div key={todo.id}>
+              <DisplayTodo todo={todo} />
+              <UpdateTodoForm todo={todo} />
+            </div>
+          );
         })
       ) : (
         <p>Loading</p>
       )}
-      <CreateTodoForm />
     </ul>
   );
 };

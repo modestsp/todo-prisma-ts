@@ -1,3 +1,7 @@
 html {
   background-color: rgba(0, 0, 0, 0.459);
+  margin: 0;
+  padding: 0;
 }
+
+@import-normalize;

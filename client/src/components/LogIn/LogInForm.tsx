@@ -5,10 +5,7 @@ import { CreateSessionInput } from '../../types';
 import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext, useState } from 'react';
-import { UserContext } from '../../App';
-import { AxiosError } from 'axios';
-import { axiosErrorHandler } from '../../utils/axiosErrorHandler';
+import { useState } from 'react';
 
 export const createSessionSchema = object({
   username: string({
@@ -22,7 +19,6 @@ export const createSessionSchema = object({
 export default function LogInForm() {
   const navigate = useNavigate();
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
-  const context = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -35,12 +31,7 @@ export default function LogInForm() {
     try {
       const { username, password } = data;
       await userService.login({ username, password });
-      const loggedUser = await userService.getCurrentUser();
-      context?.setCurrentUser(loggedUser);
       return navigate('/');
-      // const logged = await axios.get('http://localhost:4000/api/me', {
-      //   withCredentials: true,
-      // });
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);
       setTimeout(() => {

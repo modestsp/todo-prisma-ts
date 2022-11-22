@@ -1,12 +1,11 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { object, string } from 'zod';
 import { useNavigate } from 'react-router-dom';
-import { CreateUserInput, User } from '../../types';
+import { CreateUserInput } from '../../types';
 import userService from '../../services/user.service';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useContext, useState } from 'react';
-import { UserContext } from '../../App';
 import styles from './signup.module.css';
+import { useState } from 'react';
 // Check for available username
 // If user created redirect
 // Else tell the user the error
@@ -32,11 +31,10 @@ export const createUserSchema = object({
   path: ['passwordConfirm'],
 });
 
+// Revisar si funciona el mensaje de error que viene desde el backend
 export const SignUp = () => {
   const navigate = useNavigate();
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
-  const context = useContext(UserContext);
-  // const { accessToken, setAccessToken } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -47,9 +45,9 @@ export const SignUp = () => {
   });
   const onSubmit: SubmitHandler<CreateUserInput> = async (input) => {
     try {
+      // Aca puedo usar react query, y usar on succes para navigar
       const { username, password } = input;
-      const createdUser = await userService.createUser(input);
-      context?.setCurrentUser(createdUser);
+      await userService.createUser(input);
       const tokens = await userService.login({ username, password });
       if (tokens) return navigate('/');
     } catch (e: any) {

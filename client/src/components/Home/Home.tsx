@@ -1,17 +1,17 @@
 import { Header } from './Header/Header';
 import { Main } from './Main/Main';
 import { Footer } from './Footer/Footer';
-import { useContext, useEffect } from 'react';
-import { UserContext } from '../../App';
 import styles from './home.module.css';
+import { useGetCurrentUser } from '../hooks/useGetCurrentUser';
+import { useNavigate } from 'react-router-dom';
 export const Home = () => {
-  console.log(useContext(UserContext));
+  const { data, isLoading, isError, error } = useGetCurrentUser();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log(currentUser);
-
-  //   console.log('Nuevo estate', currentUser);
-  // }, []);
+  if (isError) {
+    console.log(error);
+    navigate('/auth/login');
+  }
   return (
     <div className={styles.container}>
       <Header />

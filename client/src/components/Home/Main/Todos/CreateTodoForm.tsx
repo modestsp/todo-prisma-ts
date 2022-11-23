@@ -14,9 +14,10 @@ export const createTodoSchema = object({
   endsAt: string({
     required_error: 'End date is required',
   }),
+  projectId: string().optional(),
 });
 
-export const CreateTodoForm = () => {
+export const CreateTodoForm = ({ projectId }: { projectId?: string }) => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
 
@@ -33,7 +34,7 @@ export const CreateTodoForm = () => {
     try {
       console.log('Input', input);
       if (currentUser) {
-        mutate({ input, userId: currentUser.id });
+        mutate({ input, userId: currentUser.id, projectId });
       }
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);

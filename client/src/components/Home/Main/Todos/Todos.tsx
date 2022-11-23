@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Modal } from '../../Modal';
 import { UpdateTodoForm } from './UpdateTodo';
+import styles from './todos.module.css';
 
 export const Todos = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,7 +21,7 @@ export const Todos = () => {
   const open = () => setModalOpen(true);
 
   return (
-    <ul>
+    <div>
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -48,6 +49,6 @@ export const Todos = () => {
       ) : (
         <p>Loading</p>
       )}
-    </ul>
+    </div>
   );
 };

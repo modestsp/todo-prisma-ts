@@ -7,7 +7,13 @@ import { useState } from 'react';
 import { UpdateTodoForm } from './UpdateTodo';
 import { Modal } from '../../Modal';
 
-export const DisplayTodo = ({ todo }: { todo: Todo }) => {
+export const DisplayTodo = ({
+  todo,
+  projectId,
+}: {
+  todo: Todo;
+  projectId?: string;
+}) => {
   const { mutate, isError, isLoading, error, isSuccess } = useDeleteTodo();
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -21,30 +27,6 @@ export const DisplayTodo = ({ todo }: { todo: Todo }) => {
       console.log('Cancelled');
     }
   };
-
-  // <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
-  // {modalOpen && (
-  //   <Modal handleClose={close}>
-  //     <CreateTodoForm />
-  //   </Modal>
-  // )}
-
-  {
-    /* <motion.button
-whileHover={{ scale: 1.1 }}
-whileTap={{ scale: 0.9 }}
-onClick={() => (modalOpen ? close() : open())}
->
-Create todo
-</motion.button>
-<AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
-{modalOpen && (
-  <Modal handleClose={close}>
-    <CreateTodoForm />
-  </Modal>
-)}
-</AnimatePresence> */
-  }
 
   return (
     <li className={styles.todoCard}>
@@ -65,7 +47,7 @@ Create todo
           >
             {modalOpen && (
               <Modal handleClose={close}>
-                <UpdateTodoForm todo={todo} />
+                <UpdateTodoForm todo={todo} projectId={projectId} />
               </Modal>
             )}
           </AnimatePresence>

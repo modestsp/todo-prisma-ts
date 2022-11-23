@@ -20,15 +20,20 @@
 .modal {
   width: clamp(50%, 700px, 90%);
   height: min(50%, 300px);
-  z-index: 100;
   margin: auto;
   padding: 0 2rem;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   background-color: aliceblue;
   position: relative;
+}
+
+.modal form {
+  align-self: center;
+  justify-self: center;
 }
 
 .closeButton {

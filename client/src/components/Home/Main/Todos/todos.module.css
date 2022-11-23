@@ -18,11 +18,13 @@ p {
 }
 
 .todoInfoContainer {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.todoCard div {
+.todoInfo {
   width: 100%;
   display: flex;
   justify-content: space-between;

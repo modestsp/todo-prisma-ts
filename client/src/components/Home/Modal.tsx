@@ -10,12 +10,15 @@ const dropIn = {
     y: '0',
     opacity: 1,
     transition: {
-      duration: 0.25,
+      duration: 0.5,
       type: 'spring',
     },
   },
   exit: {
     opacity: 0,
+    transition: {
+      duration: 0.1,
+    },
   },
 };
 
@@ -44,7 +47,7 @@ export const Modal = ({
         >
           X
         </motion.button>
-        <p>{children}</p>
+        {children}
       </motion.div>
     </Backdrop>
   );

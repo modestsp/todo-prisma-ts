@@ -6,13 +6,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useUpdateTodo } from '../../../hooks/useUpdateTodo';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './todos.module.css';
+
 export const updateTodoSchema = object({
   todoId: string().optional(),
   description: string().optional(),
   endsAt: string().optional(),
+  projectId: string().optional(),
 });
 
-export const UpdateTodoForm = ({ todo }: { todo: Todo }) => {
+export const UpdateTodoForm = ({
+  todo,
+  projectId,
+}: {
+  todo: Todo;
+  projectId?: string;
+}) => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
 
@@ -33,7 +41,7 @@ export const UpdateTodoForm = ({ todo }: { todo: Todo }) => {
     console.log('ACA EL INPUT222', input);
     try {
       if (currentUser) {
-        mutate({ ...input, todoId: todo.id });
+        mutate({ ...input, todoId: todo.id, projectId });
       }
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);

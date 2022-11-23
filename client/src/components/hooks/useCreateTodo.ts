@@ -10,15 +10,17 @@ export const useCreateTodo = () => {
     mutationFn: ({
       input,
       userId,
+      projectId,
     }: {
       input: CreateTodoInput;
       userId: string;
+      projectId?: string;
     }) => {
-      return todoService.createTodo(input, userId);
+      return todoService.createTodo(input, userId, projectId);
     },
     onSuccess: () => {
       console.log('Created Todo');
-      queryClient.invalidateQueries(['todos']);
+      queryClient.invalidateQueries(['todos', 'projects']);
     },
   });
 

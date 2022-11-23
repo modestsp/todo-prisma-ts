@@ -14,11 +14,12 @@ const getAllTodos = async (): Promise<Todo[] | []> => {
 
 const createTodo = async (
   input: CreateTodoInput,
-  userId: string
+  userId: string,
+  projectId?: string
 ): Promise<Todo> => {
   const response = await axios.post(
     `${BASE_URL}/todos`,
-    { ...input, userId },
+    { ...input, userId, projectId },
     config
   );
   return response.data;

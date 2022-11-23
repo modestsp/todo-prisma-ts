@@ -8,6 +8,7 @@ export const createTodoSchema = object({
     endsAt: string({
       required_error: 'End date is required',
     }),
+    projectId: string().optional(),
   }),
 });
 

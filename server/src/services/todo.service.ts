@@ -6,13 +6,15 @@ export const createTodo = async (
   input: CreateTodoInput,
   userId: User['id']
 ) => {
-  const { description, endsAt } = input;
+  const { description, endsAt, projectId } = input;
   try {
+    console.log('PROJECTID IN CREATETODO SERVICE', projectId);
     const newTodo = await db.todo.create({
       data: {
         description,
         endsAt: new Date(endsAt),
         creatorId: userId,
+        projectId,
       },
     });
     return newTodo;

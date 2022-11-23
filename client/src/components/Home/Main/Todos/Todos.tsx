@@ -42,7 +42,6 @@ export const Todos = () => {
           return (
             <div key={todo.id}>
               <DisplayTodo todo={todo} />
-              <UpdateTodoForm todo={todo} />
             </div>
           );
         })

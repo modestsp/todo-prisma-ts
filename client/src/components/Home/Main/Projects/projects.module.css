@@ -1,3 +1,10 @@
+.projectsContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 600px;
+}
+
 .createProjectForm {
   display: flex;
   flex-direction: column;
@@ -8,6 +15,31 @@
   border: 1px solid black;
 }
 
-.projectCard:hover {
-  scale: 1.1;
+.accordionOpen,
+.accordionClosed {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 50px;
+  width: 600px;
+}
+
+.accordionOpen {
+  background: #ff0088;
+  width: 600px;
+}
+
+.accordionClosed {
+  background: #0055ff;
+  width: 600px;
+}
+
+.todoList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  overflow: hidden;
 }

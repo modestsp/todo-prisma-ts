@@ -2,9 +2,10 @@ import { Todo } from '../../../../types';
 import styles from './todos.module.css';
 import { useDeleteTodo } from '../../../hooks/useDeleteTodo';
 import { TodoInfo } from './TodoInfo';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { UpdateTodoForm } from './UpdateTodo';
+import { Modal } from '../../Modal';
 
 export const DisplayTodo = ({ todo }: { todo: Todo }) => {
   const { mutate, isError, isLoading, error, isSuccess } = useDeleteTodo();
@@ -20,6 +21,13 @@ export const DisplayTodo = ({ todo }: { todo: Todo }) => {
       console.log('Cancelled');
     }
   };
+
+  // <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
+  // {modalOpen && (
+  //   <Modal handleClose={close}>
+  //     <CreateTodoForm />
+  //   </Modal>
+  // )}
 
   {
     /* <motion.button
@@ -43,9 +51,24 @@ Create todo
       {!isLoading ? (
         <div className={styles.todoInfoContainer}>
           <TodoInfo todo={todo} />
-          {/* <motion.button onClick={handleUpdate} whileTap={{ scale: 0.9 }}>
-            Update
-          </motion.button> */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => (modalOpen ? close() : open())}
+          >
+            update todo
+          </motion.button>
+          <AnimatePresence
+            initial={false}
+            mode="wait"
+            onExitComplete={() => null}
+          >
+            {modalOpen && (
+              <Modal handleClose={close}>
+                <UpdateTodoForm todo={todo} />
+              </Modal>
+            )}
+          </AnimatePresence>
           <motion.button
             onClick={handleDelete}
             whileHover={{

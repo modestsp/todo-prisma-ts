@@ -17,19 +17,30 @@ export const createProjectSchema = object({
   }),
 });
 
-export const CreateProjectForm = () => {
+export const CreateProjectForm = ({
+  modalOpen,
+  setModalOpen,
+}: {
+  modalOpen: any;
+  setModalOpen: any;
+}) => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
+  const [waiting, setWaiting] = useState(false);
+
+  const close = () => setModalOpen(false);
+  const open = () => setModalOpen(true);
 
   const { mutate, isLoading, error, isError } = useCreateProject();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
   } = useForm<CreateProjectInput>({
     resolver: zodResolver(createProjectSchema),
   });
+
   const onSubmit: SubmitHandler<CreateProjectInput> = async (input) => {
     try {
       if (currentUser) {
@@ -65,7 +76,10 @@ export const CreateProjectForm = () => {
         {...register('endsAt', { required: true })}
       />
       <p>{errors.endsAt?.message}</p>
-      <input type="submit" />
+      <button onClick={() => (modalOpen ? close() : open())} type="submit">
+        Send
+      </button>
+      <p>{waiting ? 'Submitting' : null}</p>
     </form>
   );
 };

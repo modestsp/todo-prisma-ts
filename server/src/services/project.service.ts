@@ -34,7 +34,10 @@ export const getAllProjects = async (userId: User['id']) => {
       include: {
         todos: {
           select: {
+            id: true,
             description: true,
+            endsAt: true,
+            completed: true,
           },
         },
       },

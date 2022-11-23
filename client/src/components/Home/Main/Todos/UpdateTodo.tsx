@@ -33,7 +33,6 @@ export const UpdateTodoForm = ({ todo }: { todo: Todo }) => {
     console.log('ACA EL INPUT222', input);
     try {
       if (currentUser) {
-        const endsAt = input.endsAt;
         mutate({ ...input, todoId: todo.id });
       }
     } catch (e: any) {

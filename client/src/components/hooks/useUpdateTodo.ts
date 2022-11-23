@@ -10,7 +10,7 @@ export const useUpdateTodo = () => {
     },
     onSuccess: () => {
       console.log('Todo Updated');
-      queryClient.invalidateQueries(['todos']);
+      queryClient.invalidateQueries(['projects']);
     },
   });
   return { mutate, isLoading, isError, error };

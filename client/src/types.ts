@@ -10,6 +10,7 @@ export type CreateUserInput = TypeOf<typeof createUserSchema>;
 export type CreateTodoInput = TypeOf<typeof createTodoSchema>;
 export type CreateProjectInput = TypeOf<typeof createProjectSchema>;
 export type UpdateTodoInput = TypeOf<typeof updateTodoSchema>;
+
 export interface User {
   id: string;
   username: string;

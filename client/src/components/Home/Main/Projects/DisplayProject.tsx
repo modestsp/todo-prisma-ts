@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CreateTodoForm } from '../Todos/CreateTodoForm';
 import { Modal } from '../../Modal';
 import { DisplayTodo } from '../Todos/DisplayTodo';
-import { ProjectHeader } from './ProjectHeader';
 
 export const DisplayProject = ({ project }: { project: Project }) => {
   const { mutate, isError, error, isLoading } = useDeleteProject();

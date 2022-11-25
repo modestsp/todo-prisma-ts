@@ -1,7 +1,4 @@
-p {
-  margin: 0;
-  padding: 0;
-}
+@import '../../../../utils/constants.css';
 
 .todoCard {
   height: 80px;
@@ -9,12 +6,11 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: azure;
-  color: black;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
-  margin-bottom: 0.2rem;
-  margin-top: 0.2rem;
+  background-color: var(--main-color);
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  margin-bottom: 0.25rem;
+  padding: 0.25rem;
 }
 
 .todoInfoContainer {
@@ -37,10 +33,12 @@ p {
 }
 
 .todoInfoTitle {
-  margin: 0;
+  margin-bottom: 0.25rem;
   padding: 0;
   font-style: italic;
-  color: rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+  font-family: var(--secondary-title-font);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .removeButton {
@@ -58,3 +56,22 @@ p {
   scale: 1.1;
   box-shadow: 1px 1px 1px solid black;
 } */
+.updateButton {
+  border: none;
+  background-color: azure;
+  transition: all 1s ease;
+}
+
+.updateButton:hover {
+  text-decoration: underline blueviolet;
+}
+
+.deleteIcon:hover,
+.editIcon:hover {
+  scale: 1.1;
+  cursor: pointer;
+}
+
+.completedCheckbox {
+  border: 1px solid blue;
+}

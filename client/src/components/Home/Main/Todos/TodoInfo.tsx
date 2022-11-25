@@ -13,7 +13,11 @@ export const TodoInfo = ({ todo }: { todo: Todo }) => {
       </span>
       <span>
         <p className={styles.todoInfoTitle}>Completed</p>
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          onClick={() => console.log('Completed')}
+          className={styles.completedCheckbox}
+        />
       </span>
     </div>
   );

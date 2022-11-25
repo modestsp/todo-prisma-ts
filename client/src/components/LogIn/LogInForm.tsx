@@ -6,6 +6,7 @@ import styles from './login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export const createSessionSchema = object({
   username: string({
@@ -22,7 +23,6 @@ export default function LogInForm() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<CreateSessionInput>({
     resolver: zodResolver(createSessionSchema),
@@ -38,35 +38,52 @@ export default function LogInForm() {
         setErrorMessage(null);
       }, 3000);
       console.log(errorMesage);
+      console.log('ACA LOS ERRROE', errors);
     }
   };
-
-  console.log(watch('username')); // watch input value by passing the name of it
-
+  console.log('error', errors.username);
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <label htmlFor="username">Username</label>
-      <input
-        id="username"
-        placeholder="username"
-        defaultValue="test"
-        {...register('username', { required: true })}
-      />
-      {errors.username && (
-        <span className={styles.errorMessage}>This field is required</span>
-      )}
-      <label htmlFor="password">password</label>
-      <input
-        id="password"
-        placeholder="password"
-        {...register('password', { required: true })}
-      />
-      {errors.password && (
-        <span className={styles.errorMessage}>This field is required</span>
-      )}
-      {errorMesage ? <p>{errorMesage}</p> : null}
-      <button type="submit">Send</button>
-      <p>Dont have an account?</p>
-    </form>
+    <div className={styles.loginContainer}>
+      <h1 className={styles.title}>Login</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          placeholder="username"
+          {...register('username', { required: true })}
+        />
+        {errors.username && (
+          <span className={styles.errorMessage}>This field is required</span>
+        )}
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          placeholder="password"
+          {...register('password', { required: true })}
+        />
+        {errors.password?.message && (
+          <span className={styles.errorMessage}>This field is required</span>
+        )}
+        {errorMesage ? (
+          <p className={styles.errorMessage}>{errorMesage}</p>
+        ) : (
+          <p className={styles.disableMessage}>errorMesage</p>
+        )}
+        <motion.button
+          type="submit"
+          className={styles.loginButton}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Log In
+        </motion.button>
+        <p className={styles.createAccount}>
+          Dont have an account?{' '}
+          <a href="/auth/sign-up" className={styles.createAccount}>
+            Create one
+          </a>
+        </p>
+      </form>
+    </div>
   );
 }

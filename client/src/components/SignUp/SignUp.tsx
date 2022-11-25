@@ -6,6 +6,7 @@ import userService from '../../services/user.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styles from './signup.module.css';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 // Check for available username
 // If user created redirect
 // Else tell the user the error
@@ -18,7 +19,7 @@ export const createUserSchema = object({
     required_error: 'Username is required',
   }),
   password: string({
-    required_error: 'Name is required',
+    required_error: 'Password is required',
   }).min(6, 'Password should be at least 6 characters'),
   passwordConfirm: string({
     required_error: 'Password confirm is required',
@@ -41,12 +42,14 @@ export const SignUp = () => {
     watch,
     formState: { errors },
   } = useForm<CreateUserInput>({
+    mode: 'all',
     resolver: zodResolver(createUserSchema),
   });
   const onSubmit: SubmitHandler<CreateUserInput> = async (input) => {
     try {
       // Aca puedo usar react query, y usar on succes para navigar
       const { username, password } = input;
+      console.log('input', input);
       await userService.createUser(input);
       const tokens = await userService.login({ username, password });
       if (tokens) return navigate('/');
@@ -58,52 +61,68 @@ export const SignUp = () => {
       console.log(errorMesage);
     }
   };
-
+  console.log('ERRORS', errors);
   console.log(watch('username')); // watch input value by passing the name of it
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <label htmlFor="name">Name</label>
-      <input
-        id="name"
-        placeholder="name"
-        defaultValue="test"
-        {...register('name', { required: true })}
-      />
-      <p>{errors.name?.message}</p>
-      <label htmlFor="username">Username</label>
-      <input
-        id="username"
-        placeholder="username"
-        defaultValue="test"
-        {...register('username', { required: true })}
-      />
-      <p>{errors.username?.message}</p>
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        placeholder="password"
-        {...register('password', { required: true })}
-      />
-      <p>{errors.password?.message}</p>
-      <label htmlFor="passwordConfirm">Confirm password</label>
-      <input
-        id="passwordConfirm"
-        placeholder="Confirm password"
-        defaultValue="test"
-        {...register('passwordConfirm', { required: true })}
-      />
-      <p>{errors.passwordConfirm?.message}</p>
-      <label htmlFor="email">Email</label>
-      <input
-        id="email"
-        placeholder="email"
-        defaultValue="test"
-        {...register('email', { required: true })}
-      />
-      <p>{errors.email?.message}</p>
-      {errorMesage ? <p>{errorMesage}</p> : null}
-      <input type="submit" />
-    </form>
+    <div className={styles.loginContainer}>
+      <h1 className={styles.title}>Sign Up</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          placeholder="name"
+          {...register('name', { required: true })}
+        />
+        <p className={styles.formError}>{errors.name?.message}</p>
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          placeholder="username"
+          {...register('username', { required: true })}
+        />
+        <p className={styles.formError}>{errors.username?.message}</p>
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          placeholder="password"
+          {...register('password', { required: true })}
+        />
+        <p className={styles.formError}>{errors.password?.message}</p>
+        <label htmlFor="passwordConfirm">Confirm password</label>
+        <input
+          id="passwordConfirm"
+          placeholder="Confirm password"
+          {...register('passwordConfirm', { required: true })}
+        />
+        <p className={styles.formError}>{errors.passwordConfirm?.message}</p>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          placeholder="email"
+          {...register('email', { required: true })}
+        />
+        <p className={styles.formError}>{errors.email?.message}</p>
+        {errorMesage ? (
+          <p className={styles.errorMessage}>{errorMesage}</p>
+        ) : (
+          <p className={styles.disableMessage}>errorMesage</p>
+        )}
+        <motion.button
+          type="submit"
+          className={styles.createAccountButton}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Create Account
+        </motion.button>
+        <p className={styles.login}>
+          Already have an account?{' '}
+          <a href="/auth/login" className={styles.login}>
+            Log In
+          </a>
+        </p>
+      </form>
+    </div>
   );
 };

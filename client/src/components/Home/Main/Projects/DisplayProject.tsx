@@ -6,13 +6,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CreateTodoForm } from '../Todos/CreateTodoForm';
 import { Modal } from '../../Modal';
 import { DisplayTodo } from '../Todos/DisplayTodo';
+import deleteIcon from '../../../../assets/deleteIcon.svg';
+import editIcon from '../../../../assets/editIcon.svg';
+import addTodoIcon from '../../../../assets/add-todo-icon.svg';
 
 export const DisplayProject = ({ project }: { project: Project }) => {
   const { mutate, isError, error, isLoading } = useDeleteProject();
   const [modalOpen, setModalOpen] = useState(false);
   const [expanded, setExpanded] = useState<boolean>(false);
 
-  const close = () => setModalOpen(false);
+  const close = (e?: any) => {
+    e.stopPropagation();
+    setModalOpen(false);
+  };
   const open = () => setModalOpen(true);
 
   const handleDelete = () => {
@@ -21,6 +27,11 @@ export const DisplayProject = ({ project }: { project: Project }) => {
     } else {
       console.log('Cancelled');
     }
+  };
+
+  const handleModal = (e: any) => {
+    e.stopPropagation();
+    modalOpen ? close() : open();
   };
 
   return (
@@ -33,15 +44,14 @@ export const DisplayProject = ({ project }: { project: Project }) => {
             className={expanded ? styles.accordionOpen : styles.accordionClosed}
             onClick={() => setExpanded(expanded ? false : true)}
           >
-            {project.title}
+            <p className={styles.projectTitle}>{project.title}</p>
             <button>Update Project</button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => (modalOpen ? close() : open())}
-            >
-              Add todo
-            </motion.button>
+            <img
+              src={addTodoIcon}
+              alt="add a todo"
+              className={styles.addTodoIcon}
+              onClick={handleModal}
+            />
             <AnimatePresence
               initial={false}
               mode="wait"
@@ -53,7 +63,12 @@ export const DisplayProject = ({ project }: { project: Project }) => {
                 </Modal>
               )}
             </AnimatePresence>
-            <button onClick={handleDelete}>Delete</button>
+            <img
+              src={deleteIcon}
+              alt="delete todo"
+              className={styles.deleteIcon}
+              onClick={handleDelete}
+            />
           </motion.header>
           {/* TODOS LIST */}
           <AnimatePresence initial={false}>

@@ -6,7 +6,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { UpdateTodoForm } from './UpdateTodo';
 import { Modal } from '../../Modal';
-
+import deleteIcon from '../../../../assets/deleteIcon.svg';
+import editIcon from '../../../../assets/editIcon.svg';
 export const DisplayTodo = ({
   todo,
   projectId,
@@ -29,17 +30,16 @@ export const DisplayTodo = ({
   };
 
   return (
-    <li className={styles.todoCard}>
+    <article className={styles.todoCard}>
       {!isLoading ? (
         <div className={styles.todoInfoContainer}>
           <TodoInfo todo={todo} />
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+          <img
+            src={editIcon}
+            alt="edit todo"
+            className={styles.editIcon}
             onClick={() => (modalOpen ? close() : open())}
-          >
-            update todo
-          </motion.button>
+          />
           <AnimatePresence
             initial={false}
             mode="wait"
@@ -51,7 +51,14 @@ export const DisplayTodo = ({
               </Modal>
             )}
           </AnimatePresence>
-          <motion.button
+          <img
+            src={deleteIcon}
+            alt="delete todo"
+            className={styles.deleteIcon}
+            onClick={handleDelete}
+          />
+
+          {/* <motion.button
             onClick={handleDelete}
             whileHover={{
               scale: 1.1,
@@ -61,11 +68,11 @@ export const DisplayTodo = ({
             className={styles.removeButton}
           >
             X
-          </motion.button>
+          </motion.button> */}
         </div>
       ) : (
         <p>Deleting</p>
       )}
-    </li>
+    </article>
   );
 };

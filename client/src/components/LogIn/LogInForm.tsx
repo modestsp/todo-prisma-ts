@@ -7,14 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Loader } from '../utils/Loader';
 
 export const createSessionSchema = object({
-  username: string({
-    required_error: 'Username is required',
-  }),
-  password: string({
-    required_error: 'Password is required',
-  }),
+  username: string().min(1, 'Username cannot be empty'),
+  password: string().min(1, 'Password cannot be empty'),
 });
 
 export default function LogInForm() {
@@ -23,7 +20,7 @@ export default function LogInForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<CreateSessionInput>({
     resolver: zodResolver(createSessionSchema),
   });
@@ -31,7 +28,7 @@ export default function LogInForm() {
     try {
       const { username, password } = data;
       await userService.login({ username, password });
-      return navigate('/');
+      return navigate('/home');
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);
       setTimeout(() => {
@@ -53,7 +50,7 @@ export default function LogInForm() {
           {...register('username', { required: true })}
         />
         {errors.username && (
-          <span className={styles.errorMessage}>This field is required</span>
+          <span className={styles.errorMessage}>{errors.username.message}</span>
         )}
         <label htmlFor="password">Password</label>
         <input
@@ -62,7 +59,7 @@ export default function LogInForm() {
           {...register('password', { required: true })}
         />
         {errors.password?.message && (
-          <span className={styles.errorMessage}>This field is required</span>
+          <span className={styles.errorMessage}>{errors.password.message}</span>
         )}
         {errorMesage ? (
           <p className={styles.errorMessage}>{errorMesage}</p>
@@ -75,10 +72,10 @@ export default function LogInForm() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
-          Log In
+          {isSubmitting ? <Loader /> : 'Log In'}
         </motion.button>
         <p className={styles.createAccount}>
-          Dont have an account?{' '}
+          Don't have an account?{' '}
           <a href="/auth/sign-up" className={styles.createAccount}>
             Create one
           </a>

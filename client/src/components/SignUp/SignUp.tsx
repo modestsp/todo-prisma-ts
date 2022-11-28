@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import styles from './signup.module.css';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Loader } from '../utils/Loader';
 // Check for available username
 // If user created redirect
 // Else tell the user the error
@@ -14,19 +15,17 @@ import { motion } from 'framer-motion';
 export const createUserSchema = object({
   name: string({
     required_error: 'Name is required',
-  }),
+  }).min(3, 'Name should be at least 3 characters'),
   username: string({
     required_error: 'Username is required',
-  }),
+  }).min(3, 'Username should be at least 3 characters'),
   password: string({
     required_error: 'Password is required',
   }).min(6, 'Password should be at least 6 characters'),
   passwordConfirm: string({
     required_error: 'Password confirm is required',
   }),
-  email: string({
-    required_error: 'Email is required',
-  }).email('Not a valid email'),
+  email: string().min(1, 'Email cannot be empty').email('Not a valid email'),
 }).refine((data) => data.password === data.passwordConfirm, {
   message: 'Passwords do not match',
   path: ['passwordConfirm'],
@@ -40,7 +39,7 @@ export const SignUp = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<CreateUserInput>({
     mode: 'all',
     resolver: zodResolver(createUserSchema),
@@ -52,7 +51,7 @@ export const SignUp = () => {
       console.log('input', input);
       await userService.createUser(input);
       const tokens = await userService.login({ username, password });
-      if (tokens) return navigate('/');
+      if (tokens) return navigate('/home');
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);
       setTimeout(() => {
@@ -65,7 +64,7 @@ export const SignUp = () => {
   console.log(watch('username')); // watch input value by passing the name of it
 
   return (
-    <div className={styles.loginContainer}>
+    <div className={styles.signupContainer}>
       <h1 className={styles.title}>Sign Up</h1>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <label htmlFor="name">Name</label>
@@ -114,7 +113,7 @@ export const SignUp = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Create Account
+          {isSubmitting ? <Loader /> : 'Create Account'}
         </motion.button>
         <p className={styles.login}>
           Already have an account?{' '}

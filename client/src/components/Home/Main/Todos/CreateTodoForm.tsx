@@ -6,14 +6,12 @@ import styles from './todos.module.css';
 import { useGetCurrentUser } from '../../../hooks/useGetCurrentUser';
 import { useCreateTodo } from '../../../hooks/useCreateTodo';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Loader } from '../../../utils/Loader';
 
 export const createTodoSchema = object({
-  description: string({
-    required_error: 'Description is required',
-  }),
-  endsAt: string({
-    required_error: 'End date is required',
-  }),
+  description: string().min(1, 'Description is required'),
+  endsAt: string().min(1, 'End date is required'),
   projectId: string().optional(),
 });
 
@@ -26,15 +24,19 @@ export const CreateTodoForm = ({ projectId }: { projectId?: string }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<CreateTodoInput>({
     resolver: zodResolver(createTodoSchema),
   });
   const onSubmit: SubmitHandler<CreateTodoInput> = async (input) => {
     try {
-      console.log('Input', input);
       if (currentUser) {
-        mutate({ input, userId: currentUser.id, projectId });
+        return new Promise<void>((resolve) => {
+          setTimeout(() => {
+            mutate({ input, userId: currentUser.id, projectId });
+            resolve();
+          }, 4000);
+        });
       }
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);
@@ -45,25 +47,32 @@ export const CreateTodoForm = ({ projectId }: { projectId?: string }) => {
     }
   };
 
+  console.log('ACA TODO ERROR', errors);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.todoForm}>
-      <label htmlFor="name">Description</label>
+      <label htmlFor="description">Description</label>
       <input
-        id="name"
-        placeholder="name"
-        defaultValue="test"
+        id="description"
+        placeholder="Description"
         {...register('description', { required: true })}
       />
-      <p>{errors.description?.message}</p>
+      <p className={styles.errorMessage}>{errors.description?.message}</p>
       <label htmlFor="endsAt">End Date</label>
       <input
+        type={'date'}
         id="endsAt"
-        placeholder="username"
-        defaultValue="test"
+        placeholder="End Date"
         {...register('endsAt', { required: true })}
       />
-      <p>{errors.endsAt?.message}</p>
-      <input type="submit" />
+      <p className={styles.errorMessage}>{errors.endsAt?.message}</p>
+      <motion.button
+        type="submit"
+        className={styles.submitButton}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {isSubmitting ? <Loader /> : 'Create Project'}
+      </motion.button>
     </form>
   );
 };

@@ -5,11 +5,11 @@ export const TodoInfo = ({ todo }: { todo: Todo }) => {
     <div className={styles.todoInfo}>
       <span>
         <p className={styles.todoInfoTitle}>Description</p>
-        <p>{todo.description}</p>
+        <p className={styles.todoInfoContent}>{todo.description}</p>
       </span>
       <span>
         <p className={styles.todoInfoTitle}>End Date</p>
-        <p>{todo.endsAt}</p>
+        <p className={styles.todoInfoContent}>{todo.endsAt.substring(0, 10)}</p>
       </span>
       <span>
         <p className={styles.todoInfoTitle}>Completed</p>

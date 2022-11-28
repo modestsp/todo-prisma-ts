@@ -5,6 +5,7 @@ import { Todo, UpdateTodoInput } from '../../../../types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUpdateTodo } from '../../../hooks/useUpdateTodo';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { motion } from 'framer-motion';
 import styles from './todos.module.css';
 
 export const updateTodoSchema = object({
@@ -61,19 +62,25 @@ export const UpdateTodoForm = ({
       <input
         id="description"
         placeholder="description"
-        defaultValue="test"
         {...register('description')}
       />
-      <p>{errors.description?.message}</p>
+      <p className={styles.errorMesage}>{errors.description?.message}</p>
       <label htmlFor="endsAt">End Date</label>
       <input
+        type={'date'}
         id="endsAt"
         placeholder="End Date"
-        defaultValue="test"
         {...register('endsAt')}
       />
-      <p>{errors.endsAt?.message}</p>
-      <input type="submit" />
+      <p className={styles.errorMesage}>{errors.endsAt?.message}</p>
+      <motion.button
+        type="submit"
+        className={styles.submitButton}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        Update Todo
+      </motion.button>
     </form>
   );
 };

@@ -5,9 +5,15 @@ import { CreateTodoForm } from './CreateTodoForm';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Modal } from '../../Modal';
+import { Modal } from '../../../utils/Modal';
+import addIcon from '../../../../assets/addIcon.svg';
 import { UpdateTodoForm } from './UpdateTodo';
 import styles from './todos.module.css';
+import { Loader } from '../../../utils/Loader';
+
+const style = {
+  marginTop: '10rem',
+};
 
 export const Todos = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -16,19 +22,18 @@ export const Todos = () => {
     queryKey: ['todos'],
     queryFn: todoService.getAllTodos,
   });
-
+  console.log('TODOS', todos);
   const close = () => setModalOpen(false);
   const open = () => setModalOpen(true);
 
-  return (
-    <div>
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+  return !isLoading ? (
+    <div className={styles.todosContainer}>
+      <img
+        src={addIcon}
+        alt="edit todo"
+        className={styles.createTodoButton}
         onClick={() => (modalOpen ? close() : open())}
-      >
-        Create todo
-      </motion.button>
+      />
 
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {modalOpen && (
@@ -38,17 +43,15 @@ export const Todos = () => {
         )}
       </AnimatePresence>
 
-      {!isLoading ? (
-        todos!.map((todo: Todo) => {
-          return (
-            <div key={todo.id}>
-              <DisplayTodo todo={todo} />
-            </div>
-          );
-        })
-      ) : (
-        <p>Loading</p>
-      )}
+      {todos!.map((todo: Todo) => {
+        return (
+          <div key={todo.id}>
+            <DisplayTodo todo={todo} />
+          </div>
+        );
+      })}
     </div>
+  ) : (
+    <Loader style={style} />
   );
 };

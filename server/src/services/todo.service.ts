@@ -8,7 +8,6 @@ export const createTodo = async (
 ) => {
   const { description, endsAt, projectId } = input;
   try {
-    console.log('PROJECTID IN CREATETODO SERVICE', projectId);
     const newTodo = await db.todo.create({
       data: {
         description,
@@ -29,6 +28,7 @@ export const getAllTodos = async (userId: User['id']) => {
     const todos = db.todo.findMany({
       where: {
         creatorId: userId,
+        projectId: null,
       },
     });
     return todos;

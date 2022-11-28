@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import {
   CreateTodoInput,
   DeleteTodoInput,
@@ -17,14 +17,12 @@ export const createTodoHandler = async (
   req: Request<{}, {}, CreateTodoInput>,
   res: Response
 ) => {
-  const currentUser: Omit<User, 'password'> = res.locals.user;
   try {
-    console.log('ACA LA REQUEST', req.body);
+    const currentUser: Omit<User, 'password'> = res.locals.user;
     const todo = await createTodo(req.body, currentUser.id);
     return res.send(todo);
   } catch (e: any) {
-    logger.error(e);
-    return res.status(400).send(e.message);
+    return res.status(400).send({ error: 'Unauthorized' });
   }
 };
 
@@ -37,7 +35,7 @@ export const getAllTodosHandler = async (req: Request, res: Response) => {
     }
   } catch (e: any) {
     logger.error(e);
-    return res.status(400).send([]);
+    return res.status(400).send(null);
   }
 };
 
@@ -58,7 +56,7 @@ export const updateTodoHandler = async (
     });
     return res.status(200).send(updatedTodo);
   } catch (e: any) {
-    throw new Error(e.message);
+    return res.status(400).send({ error: 'Unauthorized' });
   }
 };
 
@@ -73,7 +71,7 @@ export const deleteTodoHandler = async (
     const deletedTodo = await deleteTodo(todoId);
     if (deletedTodo) return res.status(200).send(deletedTodo);
   } catch (e: any) {
-    logger.error(e);
-    return res.status(400).send(e.message);
+    console.log('Todo Not found');
+    return res.status(404).send({ error: 'Todo not found or already deleted' });
   }
 };

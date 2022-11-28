@@ -6,8 +6,6 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('ESTOY ENTRANDO ACA MIDDLEWARE');
-  // console.log(e.meta.target);
   if (e instanceof Prisma.PrismaClientKnownRequestError) {
     // The .code property can be accessed in a type-safe manner
     if (e.code === 'P2002') {
@@ -19,7 +17,6 @@ export const errorHandler = (
         .send({ error: 'Username or email already exists' });
     }
   }
-  // 409 because we assume that some of the inputs are not unique
 
   next(e);
 };

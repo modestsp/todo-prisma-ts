@@ -74,8 +74,6 @@ export const updateProject = async (input: UpdateProjectInput) => {
         endsAt,
       },
     });
-    console.log('ACA EL INPUT', input);
-    console.log('ACA EL Project', updatedProject);
     return updatedProject;
   } catch (e: any) {
     throw new Error(e.message);

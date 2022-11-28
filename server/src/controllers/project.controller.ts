@@ -22,7 +22,7 @@ export const createProjectHandler = async (
     const newProject = await createProject(req.body, currentUser.id);
     return res.status(201).send(newProject);
   } catch (e: any) {
-    throw new Error(e.message);
+    return res.status(400).send({ error: 'Unauthorized' });
   }
 };
 
@@ -48,7 +48,9 @@ export const deleteProjectHandler = async (
     const projectDeleted = await deleteProject({ projectId });
     return res.status(200).send(projectDeleted);
   } catch (e: any) {
-    throw new Error(e.message);
+    return res
+      .status(404)
+      .send({ error: 'Project not found or already deleted' });
   }
 };
 
@@ -58,9 +60,7 @@ export const updateProjectHandler = async (
 ) => {
   try {
     const { projectId, title, endsAt } = req.body;
-    console.log('aca el req body', req.body);
     const updatedProject = await updateProject({ projectId, title, endsAt });
-    console.log('ACA EL UPDATED PROJECT', updatedProject);
     return res.status(200).send(updatedProject);
   } catch (e: any) {
     throw new Error(e.message);

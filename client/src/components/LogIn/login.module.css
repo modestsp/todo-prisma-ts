@@ -34,6 +34,8 @@
   width: 300px;
   box-shadow: 0 0 5px #333;
   border-radius: 0.5rem;
+  background: var(--secondary-bg-color);
+  margin-top: 1rem;
 }
 
 .form input {
@@ -53,6 +55,7 @@
 
 .form input:focus {
   outline: none;
+  box-shadow: 0 0 3px #333;
 }
 
 .form label {
@@ -60,23 +63,27 @@
   margin-bottom: 0.5rem;
   margin-top: 1rem;
   font-size: 20px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .loginButton {
+  display: flex;
   margin-top: 1.5rem;
   margin-bottom: 2rem;
-  padding: 0.25rem;
-  width: 6rem;
+  padding: 0.5rem;
   font-family: var(--main-text-font);
   font-size: 1.2rem;
   color: white;
   background-color: #f4a261;
   border: 1px solid rgba(0, 0, 0, 0.301);
+  justify-content: center;
+  align-items: center;
+  width: 120px;
 }
 
 .createAccount {
   font-family: var(--main-text-font);
   font-size: 18px;
   font-style: italic;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }

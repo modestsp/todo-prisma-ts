@@ -1,0 +1,18 @@
+.headerContainer {
+  display: flex;
+  background-color: antiquewhite;
+}
+
+.headerContainer ul {
+  display: flex;
+  list-style: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+}

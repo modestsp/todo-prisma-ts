@@ -1,16 +1,20 @@
-@import '../../../../utils/constants.css';
+.todosContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .todoCard {
   height: 80px;
-  width: 500px;
+  width: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--main-color);
+  background: var(--secondary-bg-color);
   border-radius: 10px 10px 10px 10px;
   box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  margin-bottom: 0.25rem;
-  padding: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0 0.5rem;
 }
 
 .todoInfoContainer {
@@ -25,11 +29,61 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-family: var(--secondary-text-font);
+}
+
+.errorMessage {
+  margin-top: 1rem;
+  color: red;
+  font-family: var(--main-text-font);
 }
 
 .todoForm {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  box-shadow: 0 0 5px #333;
+  border-radius: 0.5rem;
+  background: var(--secondary-bg-color);
+  margin-top: 1rem;
+}
+
+.todoForm label {
+  font-family: var(--main-text-font);
+  margin-bottom: 0.75rem;
+  margin-top: 1rem;
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.todoForm input {
+  border: none;
+  border-radius: 5px;
+  height: 20px;
+  padding: var(--input-pd);
+  font-family: var(--main-text-font);
+  font-weight: 500;
+  font-size: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.233);
+}
+
+.submitButton {
+  display: flex;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  font-family: var(--main-text-font);
+  font-size: 1.2rem;
+  color: white;
+  background-color: #f4a261;
+  border: 1px solid rgba(0, 0, 0, 0.301);
+  justify-content: center;
+  align-items: center;
+  width: 150px;
 }
 
 .todoInfoTitle {
@@ -41,21 +95,19 @@
   color: rgba(0, 0, 0, 0.4);
 }
 
+.todoInfoContent {
+  margin-top: 0.5rem;
+  width: 200px;
+}
+
 .removeButton {
   border-radius: 0.2rem;
   color: rgb(24, 23, 23);
   border: none;
   background-color: rgba(255, 0, 0, 0.527);
   margin-top: 0.5rem;
-
-  /* position: absolute;
-  top: 5%;
-  left: 92%; */
 }
-/* .removeButton:hover {
-  scale: 1.1;
-  box-shadow: 1px 1px 1px solid black;
-} */
+
 .updateButton {
   border: none;
   background-color: azure;
@@ -66,6 +118,24 @@
   text-decoration: underline blueviolet;
 }
 
+.createTodoButton {
+  margin: 1rem 0;
+  border-radius: 50%;
+  padding: 0.25rem;
+  background: white;
+  border: 2px solid #606c38;
+  cursor: pointer;
+}
+
+.createTodoButton:hover {
+  background: rgba(128, 128, 128, 0.575);
+}
+
+.deleteIcon,
+.editIcon {
+  margin-left: 1rem;
+}
+
 .deleteIcon:hover,
 .editIcon:hover {
   scale: 1.1;
@@ -74,4 +144,16 @@
 
 .completedCheckbox {
   border: 1px solid blue;
+}
+
+.deleteMessage {
+  font-family: var(--secondary-text-font);
+  font-size: 18px;
+  margin-left: 0.5rem;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

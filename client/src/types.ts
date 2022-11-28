@@ -4,12 +4,14 @@ import { createUserSchema } from './components/SignUp/SignUp';
 import { createTodoSchema } from './components/Home/Main/Todos/CreateTodoForm';
 import { createProjectSchema } from './components/Home/Main/Projects/CreateProjectForm';
 import { updateTodoSchema } from './components/Home/Main/Todos/UpdateTodo';
+import { updateProjectSchema } from './components/Home/Main/Projects/UpdateProjectForm';
 
 export type CreateSessionInput = TypeOf<typeof createSessionSchema>;
 export type CreateUserInput = TypeOf<typeof createUserSchema>;
 export type CreateTodoInput = TypeOf<typeof createTodoSchema>;
 export type CreateProjectInput = TypeOf<typeof createProjectSchema>;
 export type UpdateTodoInput = TypeOf<typeof updateTodoSchema>;
+export type UpdateProjectInput = TypeOf<typeof updateProjectSchema>;
 
 export interface User {
   id: string;

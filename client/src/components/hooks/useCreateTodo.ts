@@ -20,6 +20,7 @@ export const useCreateTodo = () => {
     },
     onSuccess: () => {
       console.log('Created Todo');
+      queryClient.invalidateQueries(['todos']);
       queryClient.invalidateQueries(['projects']);
     },
   });

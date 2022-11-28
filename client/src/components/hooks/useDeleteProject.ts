@@ -3,7 +3,7 @@ import projectService from '../../services/project.service';
 
 export const useDeleteProject = () => {
   const queryClient = useQueryClient();
-  const { mutate, isError, error, isLoading } = useMutation({
+  const { mutate, isError, error, isLoading, isSuccess } = useMutation({
     mutationFn: (projectId: string) => {
       return projectService.deleteProject(projectId);
     },
@@ -13,5 +13,5 @@ export const useDeleteProject = () => {
     },
   });
 
-  return { mutate, isError, error, isLoading };
+  return { mutate, isError, error, isLoading, isSuccess };
 };

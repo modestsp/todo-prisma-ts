@@ -1,35 +1,23 @@
 import { object, string } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { CreateProjectInput, CreateTodoInput } from '../../../../types';
+import { CreateProjectInput } from '../../../../types';
 import styles from './projects.module.css';
 import { useGetCurrentUser } from '../../../hooks/useGetCurrentUser';
-import { useCreateTodo } from '../../../hooks/useCreateTodo';
 import { useState } from 'react';
 import { useCreateProject } from '../../../hooks/useCreateProject';
+import { motion } from 'framer-motion';
+import { Loader } from '../../../utils/Loader';
 
 export const createProjectSchema = object({
-  title: string({
-    required_error: 'Title is required',
-  }),
-  endsAt: string({
-    required_error: 'End date is required',
-  }),
+  title: string().min(1, 'Title is required'),
+  endsAt: string().min(1, 'Date is required'),
 });
 
-export const CreateProjectForm = ({
-  modalOpen,
-  setModalOpen,
-}: {
-  modalOpen: any;
-  setModalOpen: any;
-}) => {
+export const CreateProjectForm = () => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
   const [waiting, setWaiting] = useState(false);
-
-  const close = () => setModalOpen(false);
-  const open = () => setModalOpen(true);
 
   const { mutate, isLoading, error, isError } = useCreateProject();
 
@@ -44,7 +32,12 @@ export const CreateProjectForm = ({
   const onSubmit: SubmitHandler<CreateProjectInput> = async (input) => {
     try {
       if (currentUser) {
-        mutate({ input, userId: currentUser.id });
+        return new Promise<void>((resolve) => {
+          setTimeout(() => {
+            mutate({ input, userId: currentUser.id });
+            resolve();
+          }, 4000);
+        });
       }
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);
@@ -64,22 +57,25 @@ export const CreateProjectForm = ({
       <input
         id="title"
         placeholder="title"
-        defaultValue="test"
         {...register('title', { required: true })}
       />
-      <p>{errors.title?.message}</p>
+      <p className={styles.errorMessage}>{errors.title?.message}</p>
       <label htmlFor="endsAt">End Date</label>
       <input
+        type={'date'}
         id="endsAt"
         placeholder="End date"
-        defaultValue="test"
         {...register('endsAt', { required: true })}
       />
-      <p>{errors.endsAt?.message}</p>
-      <button onClick={() => (modalOpen ? close() : open())} type="submit">
-        Send
-      </button>
-      <p>{waiting ? 'Submitting' : null}</p>
+      <p className={styles.errorMessage}>{errors.endsAt?.message}</p>
+      <motion.button
+        type="submit"
+        className={styles.submitButton}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {isSubmitting ? <Loader /> : 'Create Project'}
+      </motion.button>
     </form>
   );
 };

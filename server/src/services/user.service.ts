@@ -18,12 +18,6 @@ export const createUser = async (input: CreateUserInput): Promise<User> => {
     },
   });
   return newUser;
-  // } catch (e: any) {
-
-  //   throw e;
-  //   // console.log(e.message)
-  //   // throw new Error(e.message);
-  // }
 };
 
 export const validatePassword = async ({

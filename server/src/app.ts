@@ -17,6 +17,7 @@ app.use(
   })
 );
 
+app.use(express.static('build'));
 app.use(cookieParser());
 
 app.use(express.json());

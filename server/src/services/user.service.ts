@@ -7,7 +7,7 @@ import { Prisma } from '@prisma/client';
 
 export const createUser = async (input: CreateUserInput): Promise<User> => {
   const { username, email, name, password } = input;
-  const salt = await config.get<number>('saltRounds');
+  const salt = 10;
   const passwordHash = await bcrypt.hash(password, salt);
   const newUser = await db.user.create({
     data: {

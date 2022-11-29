@@ -7,12 +7,12 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { errorHandler } from './utils/errorHandler';
 
-const port = config.get<number>('port');
+const port = process.env.PORT || 4000;
 
 const app = express();
 app.use(
   cors({
-    origin: config.get('origin'),
+    origin: process.env.ORIGIN,
     credentials: true,
   })
 );

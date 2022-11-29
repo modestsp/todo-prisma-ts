@@ -4,7 +4,7 @@ import userService from '../../services/user.service';
 import { createSessionSchema } from '../LogIn/LogInForm';
 import { CreateSessionInput } from '../../types';
 import styles from './welcome.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -69,9 +69,9 @@ export const LoginModal = () => {
       </motion.button>
       <p className={styles.createAccount}>
         Don't have an account?{' '}
-        <a href="/auth/sign-up" className={styles.createAccount}>
+        <Link to={'/auth/sign-up'} className={styles.createAccount}>
           Create one
-        </a>
+        </Link>
       </p>
     </form>
   );

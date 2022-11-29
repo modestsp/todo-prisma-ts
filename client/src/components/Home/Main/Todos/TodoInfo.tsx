@@ -1,6 +1,18 @@
 import { Todo } from '../../../../types';
+import { useUpdateTodo } from '../../../hooks/useUpdateTodo';
 import styles from './todos.module.css';
 export const TodoInfo = ({ todo }: { todo: Todo }) => {
+  const { mutate, isLoading, isError, error } = useUpdateTodo();
+
+  const handleComplete = () => {
+    mutate({
+      description: todo.description,
+      projectId: todo.projectId || undefined,
+      endsAt: todo.endsAt,
+      todoId: todo.id,
+      completed: true,
+    });
+  };
   return (
     <div className={styles.todoInfo}>
       <span>
@@ -15,7 +27,7 @@ export const TodoInfo = ({ todo }: { todo: Todo }) => {
         <p className={styles.todoInfoTitle}>Completed</p>
         <input
           type="checkbox"
-          onClick={() => console.log('Completed')}
+          onClick={handleComplete}
           className={styles.completedCheckbox}
         />
       </span>

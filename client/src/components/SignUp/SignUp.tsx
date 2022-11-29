@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { object, string } from 'zod';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CreateUserInput } from '../../types';
 import userService from '../../services/user.service';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -114,9 +114,9 @@ export const SignUp = () => {
         </motion.button>
         <p className={styles.login}>
           Already have an account?{' '}
-          <a href="/auth/login" className={styles.login}>
+          <Link to={'/auth/login'} className={styles.login}>
             Log In
-          </a>
+          </Link>
         </p>
       </form>
     </div>

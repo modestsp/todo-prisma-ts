@@ -31,6 +31,7 @@ export const Welcome = () => {
           exit="exit"
           variants={buttonDropIn}
           className={styles.getStarted}
+          onClick={() => navigate('/auth/sign-up')}
         >
           Get started
         </motion.button>

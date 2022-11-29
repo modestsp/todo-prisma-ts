@@ -56,7 +56,11 @@ export const DisplayTodo = ({
           >
             {modalOpen && (
               <Modal handleClose={close}>
-                <UpdateTodoForm todo={todo} projectId={projectId} />
+                <UpdateTodoForm
+                  todo={todo}
+                  projectId={projectId}
+                  handleClose={close}
+                />
               </Modal>
             )}
           </AnimatePresence>

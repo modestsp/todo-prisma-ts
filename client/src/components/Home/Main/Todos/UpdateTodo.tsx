@@ -7,42 +7,47 @@ import { useUpdateTodo } from '../../../hooks/useUpdateTodo';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import styles from './todos.module.css';
+import { Loader } from '../../../utils/Loader';
 
 export const updateTodoSchema = object({
   todoId: string().optional(),
   description: string().optional(),
   endsAt: string().optional(),
   projectId: string().optional(),
+  completed: boolean().optional(),
 });
 
 export const UpdateTodoForm = ({
   todo,
   projectId,
+  handleClose,
 }: {
   todo: Todo;
   projectId?: string;
+  handleClose: () => void;
 }) => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
 
-  const { mutate, isLoading, error, isError } = useUpdateTodo();
+  const { mutate } = useUpdateTodo();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<UpdateTodoInput>({
     resolver: zodResolver(updateTodoSchema),
   });
-  const errorHand = (e: any) => {
-    console.log('error', e);
-  };
+
   const onSubmit: SubmitHandler<UpdateTodoInput> = async (input) => {
-    console.log('INPUTS', input);
-    console.log('ACA EL INPUT', { ...input, todoId: todo.id });
-    console.log('ACA EL INPUT222', input);
     try {
       if (currentUser) {
-        mutate({ ...input, todoId: todo.id, projectId });
+        return new Promise<void>((resolve) => {
+          setTimeout(() => {
+            mutate({ ...input, todoId: todo.id, projectId });
+            handleClose();
+            resolve();
+          }, 3000);
+        });
       }
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);
@@ -54,10 +59,7 @@ export const UpdateTodoForm = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit, errorHand)}
-      className={styles.todoForm}
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.todoForm}>
       <label htmlFor="description">Description</label>
       <input
         id="description"
@@ -79,7 +81,7 @@ export const UpdateTodoForm = ({
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        Update Todo
+        {isSubmitting ? <Loader /> : 'Update Todo'}
       </motion.button>
     </form>
   );

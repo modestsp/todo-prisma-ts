@@ -14,22 +14,16 @@ const style = {
 };
 
 export const Home = () => {
-  const [errorMsg, setErrorMsg] = useState<any>(null);
   const { data: currentUser, isLoading, isError, error } = useGetCurrentUser();
   const navigate = useNavigate();
-  console.log('islOADING', isLoading);
   useEffect(() => {
     if (isError && !isLoading) {
-      setErrorMsg(error);
-      console.log(error);
       navigate('/auth/login');
     }
   }, [currentUser, navigate, isError, error, isLoading]);
 
   return !isLoading ? (
     <div className={styles.container}>
-      <p>{errorMsg}</p>
-
       <Header />
       <Main />
       <Footer />

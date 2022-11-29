@@ -14,7 +14,7 @@ const style = {
 };
 
 export const Projects = () => {
-  const { data: projects, isError, error, isLoading } = useGetProjects();
+  const { data: projects, isLoading } = useGetProjects();
   const [modalOpen, setModalOpen] = useState(false);
 
   const close = () => setModalOpen(false);
@@ -33,7 +33,7 @@ export const Projects = () => {
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {modalOpen && (
           <Modal handleClose={close}>
-            <CreateProjectForm />
+            <CreateProjectForm handleClose={close} />
           </Modal>
         )}
       </AnimatePresence>

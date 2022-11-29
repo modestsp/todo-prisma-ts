@@ -48,7 +48,6 @@ export const SignUp = () => {
     try {
       // Aca puedo usar react query, y usar on succes para navigar
       const { username, password } = input;
-      console.log('input', input);
       await userService.createUser(input);
       const tokens = await userService.login({ username, password });
       if (tokens) return navigate('/home');
@@ -57,11 +56,8 @@ export const SignUp = () => {
       setTimeout(() => {
         setErrorMessage(null);
       }, 3000);
-      console.log(errorMesage);
     }
   };
-  console.log('ERRORS', errors);
-  console.log(watch('username')); // watch input value by passing the name of it
 
   return (
     <div className={styles.signupContainer}>
@@ -83,6 +79,7 @@ export const SignUp = () => {
         <p className={styles.formError}>{errors.username?.message}</p>
         <label htmlFor="password">Password</label>
         <input
+          type={'password'}
           id="password"
           placeholder="password"
           {...register('password', { required: true })}

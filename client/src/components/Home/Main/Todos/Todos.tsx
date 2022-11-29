@@ -22,7 +22,6 @@ export const Todos = () => {
     queryKey: ['todos'],
     queryFn: todoService.getAllTodos,
   });
-  console.log('TODOS', todos);
   const close = () => setModalOpen(false);
   const open = () => setModalOpen(true);
 
@@ -38,7 +37,7 @@ export const Todos = () => {
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
         {modalOpen && (
           <Modal handleClose={close}>
-            <CreateTodoForm />
+            <CreateTodoForm handleClose={close} />
           </Modal>
         )}
       </AnimatePresence>

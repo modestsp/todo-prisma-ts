@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { Project } from '../../../../types';
-import { useDeleteProject } from '../../../hooks/useDeleteProject';
-import styles from './projects.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CreateTodoForm } from '../Todos/CreateTodoForm';
 import { Modal } from '../../../utils/Modal';
 import { DisplayTodo } from '../Todos/DisplayTodo';
-import deleteIcon from '../../../../assets/deleteIcon.svg';
-import editIcon from '../../../../assets/editIcon.svg';
-import addTodoIcon from '../../../../assets/add-todo-icon.svg';
 import { UpdateProjectForm } from './UpdateProjectForm';
 import { Loader } from '../../../utils/Loader';
+import { useUpdateProject } from '../../../hooks/useUpdateProject';
+import { useDeleteProject } from '../../../hooks/useDeleteProject';
+import editIcon from '../../../../assets/editIcon.svg';
+import deleteIcon from '../../../../assets/deleteIcon.svg';
+import doneIcon from '../../../../assets/done.svg';
+import addTodoIcon from '../../../../assets/add-todo-icon.svg';
+import styles from './projects.module.css';
 
 const style = {
   borderColor: 'black transparent black transparent',
@@ -20,13 +22,26 @@ const style = {
 
 export const DisplayProject = ({ project }: { project: Project }) => {
   const { mutate, isError, error, isLoading, isSuccess } = useDeleteProject();
+  const { mutate: update } = useUpdateProject();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
   const [expanded, setExpanded] = useState<boolean>(false);
 
-  const close = (e?: any) => {
+  const close = () => setModalOpen(false);
+
+  const handleComplete = (e: any) => {
     e.stopPropagation();
-    setModalOpen(false);
+    if (window.confirm('Are you sure?')) {
+      console.log('ENMTREs');
+      update({
+        title: project.title,
+        projectId: project.id,
+        completed: true,
+        endsAt: project.endsAt,
+      });
+    } else {
+      console.log('Cancelled');
+    }
   };
 
   const closeUpdateModal = (e?: any) => {
@@ -68,6 +83,14 @@ export const DisplayProject = ({ project }: { project: Project }) => {
         onClick={() => setExpanded(expanded ? false : true)}
       >
         <p className={styles.projectTitle}>{project.title}</p>
+
+        <img
+          src={doneIcon}
+          alt="set as completed"
+          className={styles.doneIcon}
+          onClick={handleComplete}
+        />
+
         {/* Update Todo Button */}
         <img
           src={editIcon}
@@ -82,7 +105,10 @@ export const DisplayProject = ({ project }: { project: Project }) => {
         >
           {modalUpdate && (
             <Modal handleClose={closeUpdateModal}>
-              <UpdateProjectForm projectId={project.id} />
+              <UpdateProjectForm
+                projectId={project.id}
+                handleClose={() => setModalUpdate(false)}
+              />
             </Modal>
           )}
         </AnimatePresence>
@@ -101,7 +127,7 @@ export const DisplayProject = ({ project }: { project: Project }) => {
         >
           {modalOpen && (
             <Modal handleClose={close}>
-              <CreateTodoForm projectId={project.id} />
+              <CreateTodoForm projectId={project.id} handleClose={close} />
             </Modal>
           )}
         </AnimatePresence>

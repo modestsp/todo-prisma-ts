@@ -15,7 +15,13 @@ export const createTodoSchema = object({
   projectId: string().optional(),
 });
 
-export const CreateTodoForm = ({ projectId }: { projectId?: string }) => {
+export const CreateTodoForm = ({
+  projectId,
+  handleClose,
+}: {
+  projectId?: string;
+  handleClose: () => void;
+}) => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
 
@@ -34,8 +40,9 @@ export const CreateTodoForm = ({ projectId }: { projectId?: string }) => {
         return new Promise<void>((resolve) => {
           setTimeout(() => {
             mutate({ input, userId: currentUser.id, projectId });
+            handleClose();
             resolve();
-          }, 4000);
+          }, 2000);
         });
       }
     } catch (e: any) {
@@ -43,11 +50,9 @@ export const CreateTodoForm = ({ projectId }: { projectId?: string }) => {
       setTimeout(() => {
         setErrorMessage(null);
       }, 3000);
-      console.log(errorMesage);
     }
   };
 
-  console.log('ACA TODO ERROR', errors);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.todoForm}>
       <label htmlFor="description">Description</label>
@@ -71,7 +76,7 @@ export const CreateTodoForm = ({ projectId }: { projectId?: string }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        {isSubmitting ? <Loader /> : 'Create Project'}
+        {isSubmitting ? <Loader /> : 'Create Todo'}
       </motion.button>
     </form>
   );

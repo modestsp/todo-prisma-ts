@@ -8,37 +8,43 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import styles from './projects.module.css';
 import { useUpdateProject } from '../../../hooks/useUpdateProject';
+import { Loader } from '../../../utils/Loader';
 
 export const updateProjectSchema = object({
   title: string().optional(),
   endsAt: string().optional(),
   projectId: string().optional(),
+  completed: boolean().optional(),
 });
 
-export const UpdateProjectForm = ({ projectId }: { projectId?: string }) => {
+export const UpdateProjectForm = ({
+  projectId,
+  handleClose,
+}: {
+  projectId?: string;
+  handleClose: () => void;
+}) => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
-  const [waiting, setWaiting] = useState(false);
-  const { mutate, isLoading, error, isError } = useUpdateProject();
+  const { mutate } = useUpdateProject();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<UpdateProjectInput>({
     resolver: zodResolver(updateProjectSchema),
   });
 
-  const errorHand = (e: any) => {
-    console.log('error', e);
-  };
-
   const onSubmit: SubmitHandler<UpdateProjectInput> = async (input) => {
-    console.log('INPUTS', input);
-    console.log('ACA EL INPUT', { ...input });
-    console.log('ACA EL INPUT222', input);
     try {
       if (currentUser) {
-        mutate({ ...input, projectId });
+        return new Promise<void>((resolve) => {
+          setTimeout(() => {
+            mutate({ ...input, projectId });
+            handleClose();
+            resolve();
+          }, 2000);
+        });
       }
     } catch (e: any) {
       setErrorMessage(e.response?.data?.error);
@@ -75,9 +81,8 @@ export const UpdateProjectForm = ({ projectId }: { projectId?: string }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        Update Project
+        {isSubmitting ? <Loader /> : 'Update Project'}
       </motion.button>
-      <p>{waiting ? 'Submitting' : null}</p>
     </form>
   );
 };

@@ -30,6 +30,7 @@ export const getAllProjects = async (userId: User['id']) => {
     const projects = await db.project.findMany({
       where: {
         creatorId: userId,
+        completed: false,
       },
       include: {
         todos: {
@@ -64,14 +65,15 @@ export const deleteProject = async (input: DeleteProjectInput) => {
 
 export const updateProject = async (input: UpdateProjectInput) => {
   try {
-    const { projectId, title, endsAt } = input;
+    const { projectId, title, endsAt, completed } = input;
     const updatedProject = await db.project.update({
       where: {
         id: projectId,
       },
       data: {
         title,
-        endsAt,
+        endsAt: endsAt ? new Date(endsAt) : undefined,
+        completed,
       },
     });
     return updatedProject;

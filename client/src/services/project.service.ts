@@ -2,6 +2,7 @@ import {
   CreateProjectInput,
   CreateSessionInput,
   CreateUserInput,
+  UpdateProjectInput,
   User,
 } from '../types';
 import { Todo, Project } from '../types';
@@ -38,8 +39,14 @@ const deleteProject = async (projectId: string): Promise<Project | null> => {
   });
   return response.data;
 };
+
+const updateProject = async ({ input }: { input: UpdateProjectInput }) => {
+  const response = await axios.put(`${BASE_URL}/projects`, input);
+  return response.data;
+};
 export default {
   getProjects,
   createProject,
   deleteProject,
+  updateProject,
 };

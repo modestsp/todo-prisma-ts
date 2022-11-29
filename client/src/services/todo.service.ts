@@ -39,6 +39,7 @@ export const updateTodo = async ({ input }: { input: UpdateTodoInput }) => {
   const response = await axios.put(`${BASE_URL}/todos`, input);
   return response.data;
 };
+
 export default {
   getAllTodos,
   createTodo,

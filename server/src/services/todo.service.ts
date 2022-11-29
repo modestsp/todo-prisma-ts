@@ -29,6 +29,7 @@ export const getAllTodos = async (userId: User['id']) => {
       where: {
         creatorId: userId,
         projectId: null,
+        completed: false,
       },
     });
     return todos;

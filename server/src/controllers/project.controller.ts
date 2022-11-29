@@ -59,8 +59,13 @@ export const updateProjectHandler = async (
   res: Response
 ) => {
   try {
-    const { projectId, title, endsAt } = req.body;
-    const updatedProject = await updateProject({ projectId, title, endsAt });
+    const { projectId, title, endsAt, completed } = req.body;
+    const updatedProject = await updateProject({
+      projectId,
+      title,
+      endsAt,
+      completed,
+    });
     return res.status(200).send(updatedProject);
   } catch (e: any) {
     throw new Error(e.message);

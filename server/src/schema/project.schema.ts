@@ -26,6 +26,7 @@ export const updateProjectSchema = object({
     }),
     title: string().optional(),
     endsAt: string().optional(),
+    completed: boolean().optional(),
   }),
 });
 

@@ -8,8 +8,9 @@ export const useDeleteTodo = () => {
       return todoService.deleteTodo(todoId);
     },
     onSuccess: () => {
-      console.log('Deleted succesfully');
-      queryClient.invalidateQueries();
+      // console.log('Deleted succesfully');
+      queryClient.invalidateQueries(['todos']);
+      queryClient.invalidateQueries(['projects']);
     },
   });
 

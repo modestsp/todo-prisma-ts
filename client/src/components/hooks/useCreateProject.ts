@@ -16,7 +16,7 @@ export const useCreateProject = () => {
       return projectService.createProject(input, userId);
     },
     onSuccess: () => {
-      console.log('Project created');
+      // console.log('Project created');
       queryClient.invalidateQueries(['projects']);
     },
   });

@@ -6,7 +6,7 @@ export const useGetProjects = () => {
     queryKey: ['projects'],
     queryFn: projectService.getProjects,
     onSuccess: () => {
-      console.log('Projects completed');
+      // console.log('Projects completed');
     },
   });
 

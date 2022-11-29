@@ -19,7 +19,6 @@ export const useCreateTodo = () => {
       return todoService.createTodo(input, userId, projectId);
     },
     onSuccess: () => {
-      console.log('Created Todo');
       queryClient.invalidateQueries(['todos']);
       queryClient.invalidateQueries(['projects']);
     },

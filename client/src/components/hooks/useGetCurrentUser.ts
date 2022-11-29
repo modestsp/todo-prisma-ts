@@ -6,9 +6,6 @@ export const useGetCurrentUser = () => {
     useQuery({
       queryKey: ['currentUser'],
       queryFn: userService.getCurrentUser,
-      onSuccess: () => {
-        console.log('Fetching completed');
-      },
       refetchInterval: 900000,
     });
 

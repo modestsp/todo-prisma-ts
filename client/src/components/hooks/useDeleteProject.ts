@@ -8,8 +8,8 @@ export const useDeleteProject = () => {
       return projectService.deleteProject(projectId);
     },
     onSuccess: () => {
-      console.log('Project deleted');
-      queryClient.invalidateQueries();
+      // console.log('Project deleted');
+      queryClient.invalidateQueries(['projects']);
     },
   });
 

@@ -34,11 +34,8 @@ export default function LogInForm() {
       setTimeout(() => {
         setErrorMessage(null);
       }, 3000);
-      console.log(errorMesage);
-      console.log('ACA LOS ERRROE', errors);
     }
   };
-  console.log('error', errors.username);
   return (
     <div className={styles.loginContainer}>
       <h1 className={styles.title}>Login</h1>
@@ -54,6 +51,7 @@ export default function LogInForm() {
         )}
         <label htmlFor="password">Password</label>
         <input
+          type={'password'}
           id="password"
           placeholder="password"
           {...register('password', { required: true })}

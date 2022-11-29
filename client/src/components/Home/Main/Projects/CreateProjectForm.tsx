@@ -14,7 +14,11 @@ export const createProjectSchema = object({
   endsAt: string().min(1, 'Date is required'),
 });
 
-export const CreateProjectForm = () => {
+export const CreateProjectForm = ({
+  handleClose,
+}: {
+  handleClose: () => void;
+}) => {
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const { data: currentUser } = useGetCurrentUser();
   const [waiting, setWaiting] = useState(false);
@@ -35,8 +39,9 @@ export const CreateProjectForm = () => {
         return new Promise<void>((resolve) => {
           setTimeout(() => {
             mutate({ input, userId: currentUser.id });
+            handleClose();
             resolve();
-          }, 4000);
+          }, 3000);
         });
       }
     } catch (e: any) {
@@ -44,7 +49,6 @@ export const CreateProjectForm = () => {
       setTimeout(() => {
         setErrorMessage(null);
       }, 3000);
-      console.log(errorMesage);
     }
   };
 

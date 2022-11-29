@@ -49,4 +49,5 @@ model Project {
   createdAt DateTime @default(now())
   endsAt    DateTime
   todos     Todo[]
+  completed Boolean  @default(false)
 }

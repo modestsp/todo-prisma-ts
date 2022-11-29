@@ -32,7 +32,6 @@ export const DisplayProject = ({ project }: { project: Project }) => {
   const handleComplete = (e: any) => {
     e.stopPropagation();
     if (window.confirm('Are you sure?')) {
-      console.log('ENMTREs');
       update({
         title: project.title,
         projectId: project.id,

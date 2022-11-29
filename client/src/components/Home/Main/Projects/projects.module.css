@@ -31,6 +31,7 @@
   text-align: center;
   width: 100%;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  color: black;
 }
 
 .createProjectForm input {
@@ -80,13 +81,16 @@
 }
 
 .accordionOpen {
-  background: #ff0088;
+  background: #606c38e3;
+  color: white;
   width: 600px;
+  cursor: pointer;
 }
 
 .accordionClosed {
   background: #d9d9d9;
   width: 600px;
+  cursor: pointer;
 }
 
 .todoList {
@@ -100,13 +104,15 @@ section {
 }
 
 .deleteIcon,
-.addTodoIcon {
+.addTodoIcon,
+.editIcon {
   margin-left: 1rem;
 }
 
 .deleteIcon:hover,
 .editIcon:hover,
-.addTodoIcon:hover {
+.addTodoIcon:hover,
+.doneIcon:hover {
   scale: 1.1;
   cursor: pointer;
 }

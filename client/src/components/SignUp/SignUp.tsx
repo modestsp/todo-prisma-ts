@@ -8,9 +8,7 @@ import styles from './signup.module.css';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Loader } from '../utils/Loader';
-// Check for available username
-// If user created redirect
-// Else tell the user the error
+
 
 export const createUserSchema = object({
   name: string({
@@ -31,14 +29,13 @@ export const createUserSchema = object({
   path: ['passwordConfirm'],
 });
 
-// Revisar si funciona el mensaje de error que viene desde el backend
+
 export const SignUp = () => {
   const navigate = useNavigate();
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<CreateUserInput>({
     mode: 'all',
@@ -46,7 +43,7 @@ export const SignUp = () => {
   });
   const onSubmit: SubmitHandler<CreateUserInput> = async (input) => {
     try {
-      // Aca puedo usar react query, y usar on succes para navigar
+
       const { username, password } = input;
       await userService.createUser(input);
       const tokens = await userService.login({ username, password });
@@ -107,8 +104,8 @@ export const SignUp = () => {
         <motion.button
           type="submit"
           className={styles.createAccountButton}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        // whileHover={{ scale: 1.05 }}
+        // whileTap={{ scale: 0.95 }}
         >
           {isSubmitting ? <Loader /> : 'Create Account'}
         </motion.button>

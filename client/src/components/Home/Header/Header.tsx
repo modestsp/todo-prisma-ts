@@ -1,10 +1,9 @@
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import userService from '../../../services/user.service';
 import { useGetCurrentUser } from '../../hooks/useGetCurrentUser';
 import { motion } from 'framer-motion';
+import logo from '../../../assets/Logo.png'
 import styles from './header.module.css';
-import { headerDropIn } from '../../../utils/animations';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -16,7 +15,8 @@ export const Header = () => {
   };
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>Sp</div>
+      {/* <div className={styles.logo}>Sp</div> */}
+      <img src={logo} alt="logo" />
       {currentUser && (
         <div className={styles.welcomeContainer}>
           <p className={styles.welcomeMessage}>Welcome!</p>

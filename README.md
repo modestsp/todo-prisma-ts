@@ -50,6 +50,7 @@ This app was built using the following technologies:
 - Prisma ORM
 - React
 - Framer motion
+- Zod
 
 ## Credits
 

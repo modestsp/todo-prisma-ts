@@ -12,7 +12,7 @@ export const Footer = () => {
       variants={footerBottomToTop}
       className={styles.footer}
     >
-      <a href="https://github.com/srsebbi">
+      <a href="https://github.com/modestsp">
         <img src={githubIcon} alt="go to my personal github page" />
       </a>
       <p className={styles.phrase}> Sebastián Perichón © 2022</p>

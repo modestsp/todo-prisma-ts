@@ -62,6 +62,10 @@
   width: 150px;
 }
 
+.createAccountButton:hover {
+  background-color: #f4a3618e;
+}
+
 .errorMessage {
   margin-top: 1rem;
   color: red;

@@ -67,8 +67,8 @@ export default function LogInForm() {
         <motion.button
           type="submit"
           className={styles.loginButton}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+        // whileHover={{ scale: 1.1 }}
+        // whileTap={{ scale: 0.95 }}
         >
           {isSubmitting ? <Loader /> : 'Log In'}
         </motion.button>

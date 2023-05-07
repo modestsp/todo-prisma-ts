@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
+import logo from '../../assets/Logo.png'
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGetCurrentUser } from '../hooks/useGetCurrentUser';
 import { LoginModal } from './LoginModal';
 import { dropIn, headerDropIn } from '../../utils/animations';
@@ -15,7 +16,7 @@ export const Header = () => {
     if (currentUser) {
       navigate('/home');
     }
-  }, []);
+  }, [currentUser, navigate]);
 
   return (
     <motion.header
@@ -25,7 +26,9 @@ export const Header = () => {
       variants={headerDropIn}
       className={styles.headerContainer}
     >
-      <div className={styles.logo}>Sp</div>
+
+      <img src={logo} alt="logo" />
+      {/* <div className={styles.logo}>Ssd:p</div> */}
       <ul>
         <li>
           <button

@@ -81,6 +81,10 @@
   width: 120px;
 }
 
+.loginButton:hover {
+  background-color: #f4a361af;
+}
+
 .createAccount {
   font-family: var(--main-text-font);
   font-size: 18px;

@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.20a3361b.css",
+    "main.js": "/static/js/main.7b293ca9.js",
+    "static/media/add-todo-icon.svg": "/static/media/add-todo-icon.f1859dfbf419e099c6ecbe7b92d52957.svg",
+    "static/media/githubIcon.svg": "/static/media/githubIcon.04be58c17b3d5e9744424d414240dd85.svg",
+    "index.html": "/index.html",
+    "static/media/editIcon.svg": "/static/media/editIcon.7327be08e0cc94c3f10047879adcfd02.svg",
+    "static/media/deleteIcon.svg": "/static/media/deleteIcon.0260773671df9f9768c2cf3ff8d6c257.svg",
+    "static/media/closeIcon.svg": "/static/media/closeIcon.938898130beeeeb25f4e242c478fa94b.svg",
+    "static/media/done.svg": "/static/media/done.24181ff26614724660c329e4ea3a5a57.svg",
+    "static/media/addIcon.svg": "/static/media/addIcon.11d347cdf312ea5854ae0f37065709cb.svg",
+    "main.20a3361b.css.map": "/static/css/main.20a3361b.css.map",
+    "main.7b293ca9.js.map": "/static/js/main.7b293ca9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.20a3361b.css",
+    "static/js/main.7b293ca9.js"
+  ]
+}

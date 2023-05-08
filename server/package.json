@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/srsebbi/todo-prisma-ts.git"
+    "url": "git+https://github.com/modestsp/todo-prisma-ts.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/srsebbi/todo-prisma-ts/issues"
+    "url": "https://github.com/modestsp/todo-prisma-ts/issues"
   },
-  "homepage": "https://github.com/srsebbi/todo-prisma-ts#readme",
+  "homepage": "https://github.com/modestsp/todo-prisma-ts#readme",
   "dependencies": {
     "@prisma/client": "^4.5.0",
     "bcrypt": "^5.1.0",

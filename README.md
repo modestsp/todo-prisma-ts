@@ -8,15 +8,23 @@ To run this app locally, please follow the instructions below:
 
 1. Clone this repository onto your local machine.
 2. Navigate into the project directory in your terminal.
-3. Run `npm install` to install all the necessary dependencies.
+3. Run `npm install` in both server and client to install all the necessary dependencies.
 4. Create a `.env` file in the root of the project directory and add the following environment variables:
 
 ```
-
+DATABASE_URL=""
+SALT_ROUNDS =  
+PORT = 4000
+ORIGIN = 'http://localhost:3000'
+PRIVATE_KEY = ''
+PUBLIC_KEY = ''
+ACCESS_TOKEN_TTL = ''
+REFRESH_TOKEN_TTL = ''
+REACT_APP_BASE_URL=/api
 ```
 
 5. Run `npm start` to start the app.
-6. Open your browser and go to `http://localhost:3000`.
+6. Open your browser and go to `http://localhost:4000`.
 
 ## Usage
 

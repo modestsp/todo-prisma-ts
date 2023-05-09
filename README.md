@@ -52,6 +52,7 @@ To create a new ToDo, click on the "Create ToDo" button and enter the ToDo detai
 
 This app was built using the following technologies:
 
+- Typescript
 - Node.js
 - Express.js
 - Postgresql

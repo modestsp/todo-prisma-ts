@@ -1,42 +1,26 @@
-.signupContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.title {
-  align-self: flex-start;
-  justify-self: flex-start;
-  font-family: var(--secondary-title-font);
-  font-weight: 300;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-  letter-spacing: 2px;
-  margin-top: 1rem;
-}
 
 .form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 300px;
+  width: 250px;
   box-shadow: 0 0 5px #333;
   border-radius: 0.5rem;
   background: var(--secondary-bg-color);
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  position: absolute;
+  right: 10%;
 }
 
 .form input {
   border: none;
   border-radius: 5px;
-  height: 20px;
+  height: 15px;
   padding: var(--input-pd);
   font-family: var(--main-text-font);
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.15rem;
   border: 1px solid rgba(0, 0, 0, 0.233);
 }
 
@@ -51,40 +35,36 @@
 
 .form label {
   font-family: var(--main-text-font);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   margin-top: 1rem;
-  font-size: 20px;
-  text-align: center;
-  width: 100%;
+  font-size: 1.25rem;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-.createAccountButton {
+.loginButton {
   display: flex;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  padding: 0.5rem;
+  padding: 0.25rem;
   font-family: var(--main-text-font);
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: white;
   background-color: #f4a261;
   border: 1px solid rgba(0, 0, 0, 0.301);
   justify-content: center;
   align-items: center;
-  width: 150px;
+  width: 100px;
+  cursor: pointer;
 }
 
-.createAccountButton:hover {
-  background-color: #f4a3618e;
+.createAccount {
+  font-family: var(--main-text-font);
+  font-size: 15px;
+  font-style: italic;
+  margin-bottom: 1rem;
 }
 
 .errorMessage {
-  margin-top: 1rem;
-  color: red;
-  font-family: var(--main-text-font);
-}
-
-.formError {
   margin-top: 1rem;
   color: red;
   font-family: var(--main-text-font);
@@ -94,11 +74,17 @@
   margin: 0.5rem 0;
   color: rgba(51, 51, 51, 0);
 }
+/* 
+@media only screen and (min-width: 768px){ 
+    .form{
+        left: 50%;
+    }
+} 
 
 
-.login {
-  font-family: var(--main-text-font);
-  font-size: 18px;
-  font-style: italic;
-  margin-bottom: 1rem;
+@media only screen and (min-width: 1024px){
+
 }
+
+@media only screen and (min-width: 1400px){
+} */

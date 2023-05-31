@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Loader } from '../utils/Loader';
 
-
 export const createUserSchema = object({
   name: string({
     required_error: 'Name is required',
@@ -29,7 +28,6 @@ export const createUserSchema = object({
   path: ['passwordConfirm'],
 });
 
-
 export const SignUp = () => {
   const navigate = useNavigate();
   const [errorMesage, setErrorMessage] = useState<string | null>(null);
@@ -43,7 +41,6 @@ export const SignUp = () => {
   });
   const onSubmit: SubmitHandler<CreateUserInput> = async (input) => {
     try {
-
       const { username, password } = input;
       await userService.createUser(input);
       const tokens = await userService.login({ username, password });
@@ -84,6 +81,7 @@ export const SignUp = () => {
         <p className={styles.formError}>{errors.password?.message}</p>
         <label htmlFor="passwordConfirm">Confirm password</label>
         <input
+          type={'password'}
           id="passwordConfirm"
           placeholder="Confirm password"
           {...register('passwordConfirm', { required: true })}
@@ -104,8 +102,8 @@ export const SignUp = () => {
         <motion.button
           type="submit"
           className={styles.createAccountButton}
-        // whileHover={{ scale: 1.05 }}
-        // whileTap={{ scale: 0.95 }}
+          // whileHover={{ scale: 1.05 }}
+          // whileTap={{ scale: 0.95 }}
         >
           {isSubmitting ? <Loader /> : 'Create Account'}
         </motion.button>

@@ -3,7 +3,7 @@ import { object, string } from 'zod';
 import userService from '../../services/user.service';
 import { createSessionSchema } from '../LogIn/LogInForm';
 import { CreateSessionInput } from '../../types';
-import styles from './welcome.module.css';
+import styles from './LoginModal.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';

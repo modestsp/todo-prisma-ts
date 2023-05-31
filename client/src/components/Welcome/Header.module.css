@@ -1,0 +1,73 @@
+.headerContainer {
+  display: flex;
+  background-color: var(--secondary-bg-color);
+  justify-content: space-between;
+  box-shadow: -1 0 5px #333;
+  border-radius: -1 0 0.5rem 0.5rem;
+  width: 100%;
+  padding: 1rem 0 1rem 0;  
+
+}
+
+.headerContainer ul {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  padding-right: 1rem;
+  position: relative;
+}
+
+.headerLogo{
+  margin-left: 1rem;
+}
+
+.login {
+  margin-left: 1rem;
+  background-color: black;
+  color: white;
+  font-family: var(--secondary-text-font);
+  padding: 0.25rem 0.2rem;
+  width: 4rem;
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.login:hover {
+  color: black;
+  background-color: var(--main-bg-color);
+}
+
+.signButton {
+  color: #000;
+  font-weight: 600;
+  font-family: var(--main-text-font);
+  text-decoration: none;
+  border: none;
+  background-color: var(--secondary-bg-color);
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.144);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.signButton:hover {
+  border: 1px solid var(--main-bg-color);
+}
+
+@media only screen and (min-width: 768px){ 
+    .headerContainer{
+      width: clamp(49%, 800px, 90%);
+    }
+ } 
+
+
+@media only screen and (min-width: 1024px){
+
+}
+
+@media only screen and (min-width: 1400px){
+}

@@ -6,6 +6,7 @@ footer {
   padding: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.329);
   font-family: var(--main-text-font);
+  font-size: 1.25rem;
 }
 
 .footer img {

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import logo from '../../assets/Logo.png'
+import logo from '../../assets/Logo.png';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetCurrentUser } from '../hooks/useGetCurrentUser';
 import { LoginModal } from './LoginModal';
 import { dropIn, headerDropIn } from '../../utils/animations';
-import styles from './welcome.module.css';
+import styles from './Header.module.css';
 
 export const Header = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -26,8 +26,7 @@ export const Header = () => {
       variants={headerDropIn}
       className={styles.headerContainer}
     >
-
-      <img src={logo} alt="logo" />
+      <img className={styles.headerLogo} src={logo} alt="logo" />
       {/* <div className={styles.logo}>Ssd:p</div> */}
       <ul>
         <li>
